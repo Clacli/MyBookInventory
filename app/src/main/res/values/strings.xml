@@ -1,3 +1,12 @@
 <resources>
+
+    <!-- Name of the application [CHAR LIMIT=30] -->
     <string name="app_name">My Book Inventory</string>
+
+    <!-- Label for overflow menu option that inserts sample book data into the db [CHAR LIMIT=20] -->
+    <string name="action_add_sample_data">Add Sample Book</string>
+
+    <!-- Label for overflow menu option that deletes all book records in the db [CHAR LIMIT=20] -->
+    <string name="action_delete_all_data">Delete All Books</string>
+
 </resources>
