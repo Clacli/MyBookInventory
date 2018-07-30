@@ -8,5 +8,7 @@
 
     <!-- Label for overflow menu option that deletes all book records in the db [CHAR LIMIT=20] -->
     <string name="action_delete_all_data">Delete All Books</string>
+    <string name="add_a_book_label">Add a Book</string>
+    <string name="book_activity_label">Book Inventory</string>
 
 </resources>

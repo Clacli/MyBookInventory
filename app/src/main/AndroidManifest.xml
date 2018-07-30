@@ -11,12 +11,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BookListActivity"
-            android:label="Book Inventory">
+            android:label="@string/book_activity_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ManagingActivity"
+            android:label="@string/add_a_book_label"
+            android:parentActivityName=".BookListActivity">
+            <!-- Parent activity meta-data to support 4.0 version and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BookListActivity"/>
         </activity>
     </application>
 
