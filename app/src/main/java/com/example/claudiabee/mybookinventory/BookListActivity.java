@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,10 +21,19 @@ public class BookListActivity extends AppCompatActivity {
     // This String constant is used for logging
     public final static String LOG_TAG = BookListActivity.class.getSimpleName();
 
+    // This helper class helps crating, opening, modifying the existing databases.
+    BookDbHelper mBookDbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+
+        // To access our database, we instantiate our subclass of SQLiteOpenHelper
+        // and pass the context, which is the current activity.
+        mBookDbHelper = new BookDbHelper(this);
+
+
 
         // Find the Fab
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -35,8 +45,7 @@ public class BookListActivity extends AppCompatActivity {
             }
         });
 
-        // Check if everything is ok by now and the bookshop.db has been created
-        displayDatabaseInfo();
+
     }
 
     /**
@@ -44,12 +53,10 @@ public class BookListActivity extends AppCompatActivity {
      * the pets database.
      */
     private void displayDatabaseInfo() {
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
-        BookDbHelper mDbHelper = new BookDbHelper(this);
+
 
         // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
 
         // Perform this raw SQL query "SELECT * FROM pets"
         // to get a Cursor that contains all rows from the pets table.
@@ -66,6 +73,30 @@ public class BookListActivity extends AppCompatActivity {
         }
     }
 
+    private void insertBook(){
+
+        // Create and/or open a database in write mode
+        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
+
+        // Create an object containing key_values pair with data to insert into the books table of
+        // the database.
+        ContentValues values = new ContentValues();
+        // Populate the instance of the ContentValues class with data about a book
+        values.put(BookEntry.COLUMN_BOOK_TITLE, "Il manuale del fitopreparatore");
+        values.put(BookEntry.COLUMN_BOOK_PRICE, 30.00);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, 1);
+        values.put(BookEntry.COLUMN_BOOK_OUT_OF_PRINT, BookEntry.IS_OUT_OF_PRINT);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, "OldBooksSupplier");
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, 202-555-0122);
+
+        // Inserting data, this method returns the ID of the newly inserted rows.
+        // returns -1 in case of error.
+        db.insert(BookEntry.TABLE_NAME, null, values);
+
+        // Check if everything is ok by now and the bookshop.db has been created
+        displayDatabaseInfo();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Add menu option buttons to the app bar
@@ -75,26 +106,12 @@ public class BookListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /* Start action related to the menu option clicked by user from overflow menu in the app bar
-        switch (item.getItemId()) {
-            // Insert sample book data if user click this option menu
-            case R.id.action_add_sample_data:
-                // Insert sample data in database
-                // Update the text displayed on the screen in the sample TextView
-                Toast.makeText(BookListActivity.this, "Clicking this will add a sample record about a book", Toast.LENGTH_LONG).show();
-                return true;
-            // Delete all record about book in the table
-            case R.id.action_delete_all_data:
-                // Implement later
-                Toast.makeText(BookListActivity.this, "This will delete all of the database books table", Toast.LENGTH_LONG).show();
-                return true;
-        }*/
-
         // Insert sample data in database
         // Update the text displayed on the screen in the sample TextView
-        Toast.makeText(BookListActivity.this, "Clicking this will add a sample record about a book", Toast.LENGTH_LONG).show();
+        insertBook();
 
-
+        //Toast.makeText(BookListActivity.this,
+                //"Clicking this will add a sample record about a book", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 }
