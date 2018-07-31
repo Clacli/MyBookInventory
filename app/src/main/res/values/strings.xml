@@ -8,16 +8,38 @@
 
     <!-- Label for overflow menu option that deletes all book records in the db [CHAR LIMIT=20] -->
     <string name="action_delete_all_data">Delete All Books</string>
+
+    <!-- Label for the BookManagingActivity [CHAR LIMIT=10] -->
     <string name="add_a_book_label">Add a Book</string>
+
+    <!-- Label for the BookListActivity [CHAR LIMIT=20] -->
     <string name="book_activity_label">Book Inventory</string>
+
+    <!-- Label for the book edit screen [CHAR LIMIT=20] -->
     <string name="book_label">Book</string>
+
+    <!-- Text of the hint in EditText with ID edit_book_title[CHAR LIMIT=10] -->
     <string name="title_hint">Title</string>
+
+    <!-- Text of the hint in EditText with ID edit_book_price[CHAR LIMIT=10] -->
     <string name="price_hint">Price</string>
-    <string name="currency_symbol">€</string>
+
+    <!-- The symbol for the euro currency [CHAR LIMIT=20] -->
+    <string name="currency_symbol" translatable="false">€</string>
+
+    <!-- Text of the hint in EditText with ID edit_book_quantity [CHAR LIMIT=10] -->
     <string name="quantity_hint">Quantity</string>
+
+    <!-- Label for "out of print" widget spinner [CHAR LIMIT=20] -->
     <string name="out_of_print_label">Out of Print</string>
+
+    <!-- Label for the supplier section [CHAR LIMIT=10] -->
     <string name="supplier_label">Supplier</string>
+
+    <!-- Text of the hint in EditText with ID edit_supplier_name[CHAR LIMIT=15] -->
     <string name="supplier_name_hint">Supplier Name</string>
+
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
     <string name="supplier_phone_number_hint">Supplier Phone Number</string>
 
 </resources>
