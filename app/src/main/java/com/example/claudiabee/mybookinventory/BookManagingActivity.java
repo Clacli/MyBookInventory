@@ -1,13 +1,20 @@
 package com.example.claudiabee.mybookinventory;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.claudiabee.mybookinventory.data.BookContract.BookEntry;
+import com.example.claudiabee.mybookinventory.data.BookDbHelper;
 
 /**
  * In this Activity the user can create a new pet and store it in a database.
@@ -35,6 +42,13 @@ public class BookManagingActivity extends AppCompatActivity {
     /** Spinner from which to chose the option about the book being out of print or not */
     private Spinner mOutOfPrintSpinner;
 
+    /**
+     * Info whether the book is out of print or not. The possible valid values are:
+     * {@link BookEntry#CHECK_OUT_OF_PRINT}, {@link BookEntry#NOT_OUT_OF_PRINT},
+     * {@link BookEntry#IS_OUT_OF_PRINT}.
+     */
+    private int mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +67,7 @@ public class BookManagingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BookManagingActivity.this, "This will add the book to the db and take back to BookListActivity", Toast.LENGTH_LONG).show();
-                // InsertData();
+                insertBook();
                 finish();
             }
         });
@@ -76,5 +89,72 @@ public class BookManagingActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         mOutOfPrintSpinner.setAdapter(adapter);
+
+        // Set the integer selected to the constant values
+        mOutOfPrintSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (TextUtils.isEmpty(selection)) {
+                    if (selection.equals(getString(R.string.not_out_of_print))) {
+                        mOutOfPrintInfo = BookEntry.NOT_OUT_OF_PRINT;
+                    } else if (selection.equals(getString(R.string.yes_out_of_print))) {
+                        mOutOfPrintInfo = BookEntry.IS_OUT_OF_PRINT;
+                    } else {
+                        mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    /**
+     * Get the user input from and save it in the books table of database as a new book entry
+     */
+    private void insertBook() {
+
+        // Get an instance of the BookDbHelper to access and manage the database
+        BookDbHelper bookDbHelper = new BookDbHelper(this);
+
+        // Get a database in write mode
+        SQLiteDatabase db = bookDbHelper.getWritableDatabase();
+
+        // Get the input entered by the user from the EditText
+        String bookTitle = mEditBookTitle.getText().toString().trim();
+        double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
+        int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+        String supplierName = mEditSupplierName.getText().toString().trim();
+        String supplierPhoneNumber = mEditSupplierPhoneNumber.getText().toString().trim();
+
+        // Create an instance of the ContentValues object
+        ContentValues values = new ContentValues();
+
+        // Populate the ContentValues object with
+        // key (column name) - values (obtained from the user input) and use it later
+        // to insert a new book into the books table of the database.
+        values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
+        values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity);
+        values.put(BookEntry.COLUMN_BOOK_OUT_OF_PRINT, mOutOfPrintInfo);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
+
+        // Insert ContentValues into the database and store the returned ID of the
+        // newly inserted row into variable of type long
+        long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
+
+        // Display in a toast message the ID of the newly row or an error message
+        // in case of failed insertion
+        if (newRowId == -1) {
+            Toast.makeText(this, "Error with saving book", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Book saved with ID " + newRowId, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

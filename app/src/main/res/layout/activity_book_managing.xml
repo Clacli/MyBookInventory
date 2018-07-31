@@ -122,7 +122,6 @@
         android:id="@+id/edit_supplier_phone_number"
         style="@style/EditTextStyle1"
         android:layout_marginBottom="@dimen/phone_number_edittext_margin_bottom"
-        android:digits="0123456789+"
         android:hint="@string/supplier_phone_number_hint"
         android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"

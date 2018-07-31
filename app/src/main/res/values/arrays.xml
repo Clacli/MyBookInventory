@@ -3,7 +3,7 @@
     <!-- These are the options displayed in the out_of_print drop-down Spinner -->
     <string-array name="array_out_of_print_options">
         <item>@string/check</item>
-        <item>@string/yes_out_of_print</item>
         <item>@string/not_out_of_print</item>
+        <item>@string/yes_out_of_print</item>
     </string-array>
 </resources>
