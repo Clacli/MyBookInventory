@@ -21,7 +21,6 @@
         style="@style/FabStyle"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

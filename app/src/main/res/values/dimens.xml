@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_layout_margin">16dp</dimen>
+    <dimen name="phone_number_edittext_margin_bottom">32dp</dimen>
+    <dimen name="supplier_name_edittext_margin_bottom">20dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="edit_text_1_side_margin">18sp</dimen>
+    <dimen name="edit_text_1_layout_width">0dp</dimen>
+    <dimen name="supplier_label_margin">19dp</dimen>
+    <dimen name="spinner_side_padding">16dp</dimen>
+    <dimen name="spinner_margin_top">72dp</dimen>
+    <dimen name="spinner_side_margin">8dp</dimen>
+    <dimen name="spinner_margin_bottom">73dp</dimen>
+    <dimen name="spinner_height">48dp</dimen>
+    <dimen name="out_of_print_side_margin">16dp</dimen>
+    <dimen name="out_of_print_margin_bottom">11dp</dimen>
+    <dimen name="quantity_edit_text_margin_top">28dp</dimen>
+    <dimen name="quantity_edit_text_side_margin">16dp</dimen>
+    <dimen name="currency_text_view_margin_bottom">5dp</dimen>
+    <dimen name="book_edit_text_margin">16dp</dimen>
+    <dimen name="title_edit_text_margin_top">30dp</dimen>
+    <dimen name="book_label_text_size">22sp</dimen>
+    <dimen name="book_label_text_view_margin_top">41dp</dimen>
+    <dimen name="book_label_text_view_side_margin">8dp</dimen>
+    <dimen name="root_view_padding">16dp</dimen>
+</resources>
