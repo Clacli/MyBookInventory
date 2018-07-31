@@ -10,5 +10,14 @@
     <string name="action_delete_all_data">Delete All Books</string>
     <string name="add_a_book_label">Add a Book</string>
     <string name="book_activity_label">Book Inventory</string>
+    <string name="book_label">Book</string>
+    <string name="title_hint">Title</string>
+    <string name="price_hint">Price</string>
+    <string name="currency_symbol">€</string>
+    <string name="quantity_hint">Quantity</string>
+    <string name="out_of_print_label">Out of Print</string>
+    <string name="supplier_label">Supplier</string>
+    <string name="supplier_name_hint">Supplier Name</string>
+    <string name="supplier_phone_number_hint">Supplier Phone Number</string>
 
 </resources>
