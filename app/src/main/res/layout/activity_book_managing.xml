@@ -39,9 +39,9 @@
         android:layout_marginTop="@dimen/book_edit_text_margin"
         android:hint="@string/price_hint"
         android:inputType="numberDecimal"
+        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_book_title"
-        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"/>
+        app:layout_constraintTop_toBottomOf="@+id/edit_book_title" />
 
     <TextView
         android:id="@+id/currency"
@@ -50,9 +50,9 @@
         android:layout_marginBottom="@dimen/currency_text_view_margin_bottom"
         android:text="@string/currency_symbol"
         android:textSize="@dimen/text_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"
         app:layout_constraintBottom_toBottomOf="@+id/edit_book_price"
-        app:layout_constraintStart_toEndOf="@+id/edit_book_price"
-        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"/>
+        app:layout_constraintStart_toEndOf="@+id/edit_book_price" />
 
     <EditText
         android:id="@+id/edit_book_quantity"
@@ -122,6 +122,7 @@
         android:id="@+id/edit_supplier_phone_number"
         style="@style/EditTextStyle1"
         android:layout_marginBottom="@dimen/phone_number_edittext_margin_bottom"
+        android:digits="0123456789+"
         android:hint="@string/supplier_phone_number_hint"
         android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"
