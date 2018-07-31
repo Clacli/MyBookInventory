@@ -108,7 +108,7 @@ public class BookManagingActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
             }
         });
     }

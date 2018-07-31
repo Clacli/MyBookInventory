@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -43,44 +44,18 @@ public class BookListActivity extends AppCompatActivity {
                 startActivity(new Intent(BookListActivity.this, BookManagingActivity.class));
             }
         });
-        // When onCreate is called the number of rows (number of books) in the books table is
-        // displayed on the screen.
-        displayDatabaseInfo();
     }
 
     // When the activity restarts the count of the rows updates.
     @Override
     protected void onStart() {
         super.onStart();
-        displayDatabaseInfo();
+        queryBookData();
     }
 
     /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the books table of the bookshop.db database.
-     */
-    private void displayDatabaseInfo() {
-
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
-
-        // Perform a query to get a Cursor that contains all rows from the books table.
-        Cursor cursor = db.query(BookEntry.TABLE_NAME, null, null, null, null, null, null);
-        try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // books table in the database).
-            TextView displayView = (TextView) findViewById(R.id.book_TextView);
-            displayView.setText("Number of rows in books database table: " + cursor.getCount());
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
-    }
-
-    /**
-     * This method, used for debugging purpose insert hardcoded sample data about
-     * one book into the database.
+     * This method, insert a hardcoded sample book into the database when clicking the
+     * "Add sample data" in the overflow menu
      */
     private void insertBook() {
 
@@ -102,6 +77,77 @@ public class BookListActivity extends AppCompatActivity {
         // returns -1 in case of error.
         long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
         Log.v(LOG_TAG, "New row ID: " + newRowId);
+        // Toast.makeText(this, "Number of books into the database: " + newRowId, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Query the database to retrieve the product name (book title), the price,
+     * whether it is out of print or not.
+     * At the end of thr reading close the cursor to releases all its resources
+     * and makes it invalid.
+     */
+    private void queryBookData(){
+
+        // Create and/or open a database to read from it
+        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
+
+        // Define a projection String
+        String[] projection = {
+                BookEntry.COLUMN_BOOK_TITLE,
+                BookEntry.COLUMN_BOOK_PRICE,
+                BookEntry.COLUMN_BOOK_QUANTITY,
+                BookEntry.COLUMN_BOOK_SUPPLIER_NAME
+        };
+
+        // Perform a query to get a Cursor that contains all rows from the books table.
+        Cursor cursor = db.query(
+                BookEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+                );
+
+        // Find an instance of the TextView with ID book_text_view
+        TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
+
+        try {
+            // Create a header with the name of the column for the product_info, the price, whether
+            // out of stock or not
+            displayRecordsView.append(
+                    BookEntry.COLUMN_BOOK_TITLE + " --- " +
+                    BookEntry.COLUMN_BOOK_PRICE + " --- " +
+                    BookEntry.COLUMN_BOOK_QUANTITY + " --- " +
+                    BookEntry.COLUMN_BOOK_SUPPLIER_NAME +"\n");
+
+            // Find the index for each of the selected column
+            int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
+            int bookPriceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
+            int bookQuantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
+            int bookSupplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
+
+            // Loop through each row of the cursor, and at each position of the cursor
+            // extract the desired String, double and int values using the indices obtained
+            // above.
+            while (cursor.moveToNext()) {
+                String currentBookTitle = cursor.getString(bookTitleColumnIndex);
+                double currentBookPrice = cursor.getDouble(bookPriceColumnIndex);
+                int currentBookQuantity = cursor.getInt(bookQuantityColumnIndex);
+                String currentSupplierName = cursor.getString(bookSupplierNameColumnIndex);
+
+                // Display the values just retrieved from this row on the screen
+                displayRecordsView.append(
+                        "\n" + currentBookTitle + " - "
+                             + currentBookPrice + " - "
+                             + currentBookQuantity + " - "
+                             + currentSupplierName + "\n");
+            }
+        } finally {
+            // Close the cursor and release all of its resources
+            cursor.close();
+        }
     }
 
     @Override
@@ -114,12 +160,7 @@ public class BookListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Insert sample data in database
-        // Update the text displayed on the screen in the sample TextView
         insertBook();
-        displayDatabaseInfo();
-
-        //Toast.makeText(BookListActivity.this,
-        //"Clicking this will add a sample record about a book", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 }
