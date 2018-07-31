@@ -39,7 +39,7 @@ public class BookListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Start action related to the menu option clicked by user from overflow menu in the app bar
+        /* Start action related to the menu option clicked by user from overflow menu in the app bar
         switch (item.getItemId()) {
             // Insert sample book data if user click this option menu
             case R.id.action_add_sample_data:
@@ -52,7 +52,13 @@ public class BookListActivity extends AppCompatActivity {
                 // Implement later
                 Toast.makeText(BookListActivity.this, "This will delete all of the database books table", Toast.LENGTH_LONG).show();
                 return true;
-        }
+        }*/
+
+        // Insert sample data in database
+        // Update the text displayed on the screen in the sample TextView
+        Toast.makeText(BookListActivity.this, "Clicking this will add a sample record about a book", Toast.LENGTH_LONG).show();
+
+
         return super.onOptionsItemSelected(item);
     }
 }
