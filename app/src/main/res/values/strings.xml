@@ -42,4 +42,13 @@
     <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
     <string name="supplier_phone_number_hint">Supplier Phone Number</string>
 
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
+    <string name="check">Check</string>
+
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
+    <string name="yes_out_of_print">No</string>
+
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
+    <string name="not_out_of_print">Yes</string>
+
 </resources>

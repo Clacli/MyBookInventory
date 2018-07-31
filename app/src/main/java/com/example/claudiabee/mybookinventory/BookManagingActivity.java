@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -58,5 +59,22 @@ public class BookManagingActivity extends AppCompatActivity {
             }
         });
 
+        setupSpinner();
+    }
+
+    /**
+     * Setup the dropdown spinner that allows the user to select whether or not the book
+     * is out of print.
+     */
+    private void setupSpinner() {
+        // Create the adapter for the spinner. The list options from which the user choose,
+        // are stored in the String array in arrays.xml, the spinner will use the default layout
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
+                R.array.array_out_of_print_options, android.R.layout.simple_spinner_item);
+
+        // Specify the layout style to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mOutOfPrintSpinner.setAdapter(adapter);
     }
 }
