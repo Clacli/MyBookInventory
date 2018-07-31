@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class BookListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(BookListActivity.this, "This will open another activity soon", Toast.LENGTH_LONG).show();
+                startActivity(new Intent (BookListActivity.this, BookManagingActivity.class));
             }
         });
     }
