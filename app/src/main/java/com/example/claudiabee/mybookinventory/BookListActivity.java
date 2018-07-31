@@ -64,9 +64,8 @@ public class BookListActivity extends AppCompatActivity {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
 
-        // Perform this raw SQL query "SELECT * FROM books"
-        // to get a Cursor that contains all rows from the books table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BookEntry.TABLE_NAME, null);
+        // Perform a query to get a Cursor that contains all rows from the books table.
+        Cursor cursor = db.query(BookEntry.TABLE_NAME, null, null, null, null, null, null);
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // books table in the database).
