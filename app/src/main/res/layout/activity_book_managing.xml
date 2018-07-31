@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/book_label"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="41dp"
@@ -23,30 +23,22 @@
 
     <EditText
         android:id="@+id/edit_book_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        style="@style/EditTextStyle1"
         android:layout_marginTop="30dp"
         android:hint="@string/title_hint"
         android:inputType="textCapWords"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/book_label" />
 
     <EditText
         android:id="@+id/edit_book_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/EditTextStyle2"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:hint="@string/price_hint"
         android:inputType="numberDecimal"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_book_title"
         app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"/>
@@ -64,14 +56,12 @@
 
     <EditText
         android:id="@+id/edit_book_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/EditTextStyle2"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="28dp"
         android:hint="@string/quantity_hint"
         android:inputType="number"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_book_title" />
 
@@ -120,46 +110,32 @@
 
     <EditText
         android:id="@+id/edit_supplier_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/EditTextStyle1"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
         android:hint="@string/supplier_name_hint"
         android:inputType="textCapWords"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_supplier_phone_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edit_supplier_phone_number"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/EditTextStyle1"
         android:layout_marginBottom="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
         android:hint="@string/supplier_phone_number_hint"
         android:inputType="phone"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/FabStyle"
         android:layout_margin="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_add"
         app:layout_constraintBottom_toTopOf="@+id/edit_book_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
