@@ -10,8 +10,9 @@ name of the book supplier, phone number of supplier and whether or not one book 
 API 27
 As Loader are deprecated in API 28 I chose to revert to API 27.
 
-To generate fake telephone number:
+Phone number either invented or generated on:
 https://fakenumber.org/
+
 FAB
 https://developer.android.com/guide/topics/ui/floating-action-button
 
