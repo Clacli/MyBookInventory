@@ -12,17 +12,19 @@ import android.support.annotation.Nullable;
  */
 public class MyBookInventoryProvider extends ContentProvider {
 
-    /**
-     * Tag for the log message
-     */
+    /** Tag for the log message */
     public static final String LOG_TAG = MyBookInventoryProvider.class.getSimpleName();
 
+    /** Database helper object */
+    MyBookInventoryDbHelper myBookInventoryDbHelper;
+
     /**
-     * Initialize the provider and the database and the database object
+     * Initialize the provider and the database and the database object to gain access
+     * to the database of this app
      */
     @Override
     public boolean onCreate() {
-        MyBookInventoryDbHelper myBookInventoryDbHelper = new MyBookInventoryDbHelper(getContext());
+        myBookInventoryDbHelper = new MyBookInventoryDbHelper(getContext());
         return true;
     }
 
