@@ -28,6 +28,11 @@
                 android:value=".BookListActivity"/>
         </activity>
 
-    </application>
+        <provider
+            android:name=".data.MyBookInventoryProvider"
+            android:authorities="com.example.claudiabee.mybookinventory"
+            android:exported="false"/>
 
+
+    </application>
 </manifest>
