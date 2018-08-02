@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -16,12 +17,29 @@ public final class MyBookInventoryContract {
     private MyBookInventoryContract() {
     }
 
+    /** This string constant is the content authority used to identify the Content Provider
+     * MyBookInventoryProvider
+     */
+    public static final String CONTENT_AUTHORITY = "com.example.claudiabee.mybookinventory";
+
+    /** This URI will be shared by every URI associated with MyBookInventoryContract */
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    /** This constant String stores the path for the books table which will be appended
+     * to the BASE_CONTENT_URI to form a complete CONTENT_URI. In the contract there must be defined
+     * a path to each table present in the database. At the moment in this app the database has only
+     * one table so only one path must be defined in a constant string*/
+    public static final String PATH_BOOKS = "books";
+
     /**
      * Inner class that defines constants values for the books table of the bookshop database.
      * Each entry in the table represent a book.
      * The inner class implements BaseColumns interface inheriting the primary key field _ID.
      */
     public static final class BookEntry implements BaseColumns {
+
+        /** Complete URI for the BookEntry class */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
 
         /**
          * Name of the books table of the bookshop.db
