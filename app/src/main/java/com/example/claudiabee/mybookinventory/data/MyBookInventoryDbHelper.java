@@ -5,16 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.claudiabee.mybookinventory.data.BookContract.BookEntry;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
 /**
  * Database helper for the BookInventory app.
  * This helper class manages the database creation and its version management.
  */
-public class BookDbHelper extends SQLiteOpenHelper {
+public class MyBookInventoryDbHelper extends SQLiteOpenHelper {
 
     // This is used for logging
-    public static final String LOG_TAG = BookDbHelper.class.getSimpleName();
+    public static final String LOG_TAG = MyBookInventoryDbHelper.class.getSimpleName();
 
     /**
      * The name of the database file.
@@ -28,11 +28,11 @@ public class BookDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     /**
-     * This is the constructor for a new instance of the {@link BookDbHelper}.
+     * This is the constructor for a new instance of the {@link MyBookInventoryDbHelper}.
      *
      * @param context is the contextof the app
      */
-    public BookDbHelper(Context context) {
+    public MyBookInventoryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.claudiabee.mybookinventory.data.BookContract.BookEntry;
-import com.example.claudiabee.mybookinventory.data.BookDbHelper;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 
 /**
  * In this Activity the user can create a new pet and store it in a database.
@@ -118,11 +118,11 @@ public class BookManagingActivity extends AppCompatActivity {
      */
     private void insertBook() {
 
-        // Get an instance of the BookDbHelper to access and manage the database
-        BookDbHelper bookDbHelper = new BookDbHelper(this);
+        // Get an instance of the MyBookInventoryDbHelper to access and manage the database
+        MyBookInventoryDbHelper myBookInventoryDbHelper = new MyBookInventoryDbHelper(this);
 
         // Get a database in write mode
-        SQLiteDatabase db = bookDbHelper.getWritableDatabase();
+        SQLiteDatabase db = myBookInventoryDbHelper.getWritableDatabase();
 
         // Get the input entered by the user from the EditText
         String bookTitle = mEditBookTitle.getText().toString().trim();

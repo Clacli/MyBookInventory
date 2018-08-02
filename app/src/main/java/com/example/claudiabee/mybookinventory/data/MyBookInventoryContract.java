@@ -8,12 +8,12 @@ import android.provider.BaseColumns;
  * the possible values to pass whether the book is out pf print or it is not or this information is
  * to be checked.
  */
-public final class BookContract {
+public final class MyBookInventoryContract {
 
-    // Empty private constructor for the BookContract, to prevent it to be instantiated by mistake.
+    // Empty private constructor for the MyBookInventoryContract, to prevent it to be instantiated by mistake.
     // The contract is for defining the table and the constants referred to the column
     // of the books database.
-    private BookContract() {
+    private MyBookInventoryContract() {
     }
 
     /**

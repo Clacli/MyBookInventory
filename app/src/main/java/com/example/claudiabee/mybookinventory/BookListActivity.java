@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,8 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.claudiabee.mybookinventory.data.BookDbHelper;
-import com.example.claudiabee.mybookinventory.data.BookContract.BookEntry;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
 public class BookListActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class BookListActivity extends AppCompatActivity {
     public final static String LOG_TAG = BookListActivity.class.getSimpleName();
 
     // This database helper class helps crating, opening, modifying the existing databases.
-    private BookDbHelper mBookDbHelper;
+    private MyBookInventoryDbHelper mMyBookInventoryDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,11 @@ public class BookListActivity extends AppCompatActivity {
 
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
-        mBookDbHelper = new BookDbHelper(this);
+        mMyBookInventoryDbHelper = new MyBookInventoryDbHelper(this);
 
-        // Create a Fab instanceand store it in a variable
+        /**
+         * When this Fab gets clicked an intent is sent to start the BookManagingActivity
+         */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class BookListActivity extends AppCompatActivity {
     private void insertBook() {
 
         // Create and/or open a database in write mode
-        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mMyBookInventoryDbHelper.getWritableDatabase();
 
         // Create an object containing key-values pair with data to insert into the books table of
         // the database.
@@ -89,7 +90,7 @@ public class BookListActivity extends AppCompatActivity {
     private void queryBookData(){
 
         // Create and/or open a database to read from it
-        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
+        SQLiteDatabase db = mMyBookInventoryDbHelper.getReadableDatabase();
 
         // Define a projection String
         String[] projection = {
@@ -110,18 +111,11 @@ public class BookListActivity extends AppCompatActivity {
                 null
                 );
 
-        // Find an instance of the TextView with ID book_text_view
+
+         // This TextView displays the list of books saved in the books table of the bookshop database.
         TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
 
         try {
-            // Create a header with the name of the column for the product_info, the price, whether
-            // out of stock or not
-            displayRecordsView.append(
-                    BookEntry.COLUMN_BOOK_TITLE + " --- " +
-                    BookEntry.COLUMN_BOOK_PRICE + " --- " +
-                    BookEntry.COLUMN_BOOK_QUANTITY + " --- " +
-                    BookEntry.COLUMN_BOOK_SUPPLIER_NAME +"\n");
-
             // Find the index for each of the selected column
             int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
             int bookPriceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
