@@ -27,12 +27,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BookListActivity"/>
         </activity>
-
         <provider
             android:name=".data.MyBookInventoryProvider"
             android:authorities="com.example.claudiabee.mybookinventory"
             android:exported="false"/>
-
-
     </application>
 </manifest>

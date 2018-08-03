@@ -2,10 +2,13 @@ package com.example.claudiabee.mybookinventory.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
 /**
  * {@link ContentProvider} for MyBookInventory app.
@@ -15,11 +18,31 @@ public class MyBookInventoryProvider extends ContentProvider {
     /** Tag for the log message */
     public static final String LOG_TAG = MyBookInventoryProvider.class.getSimpleName();
 
-    /** Database helper object */
-    MyBookInventoryDbHelper myBookInventoryDbHelper;
+    /** URI matcher code for the content URI for the books table */
+    private static final int PETS = 100;
+
+    /** URI matcher code for the content URI for a single pet in the pets table */
+    private static final int PET_ID = 101;
 
     /**
-     * Initialize the provider and the database and the database object to gain access
+     * UriMatcher object to match a content URI to a corresponding code.
+     * The input passed into the constructor represent the code to return for the root URI.
+     * It's common to use NO_MATCH as the input for this case.
+     */
+    private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    // Static initializer. This is run the first time anything is called from this class.
+    static {
+        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS, PETS);
+
+        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS + "/#", PET_ID);
+    }
+
+    /** Database helper object */
+    private MyBookInventoryDbHelper myBookInventoryDbHelper;
+
+    /**
+     * Initialize the provider and the database helper object to gain access
      * to the database of this app.
      * It is called on the main thread
      */
@@ -34,7 +57,7 @@ public class MyBookInventoryProvider extends ContentProvider {
      *
      * @param uri           is the given URI which specifies the resource we are interested in
      * @param projection    is an array which specifies the column/s of the database we want back in the Cursor
-     * @param selection     is a selection of the contraints which help to narrow the results of the query
+     * @param selection     is a selection of the constraints which help to narrow the results of the query
      * @param selectionArgs are the values associated with the selection, inserted here for safety.
      * @param sortOrder     is the order in which the result of the query is presented
      * @return a Cursor object

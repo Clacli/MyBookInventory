@@ -38,7 +38,7 @@ public final class MyBookInventoryContract {
      */
     public static final class BookEntry implements BaseColumns {
 
-        /** Complete URI for the BookEntry class */
+        /** Complete content URI for the BookEntry class to access data in the books table */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
 
         /**
