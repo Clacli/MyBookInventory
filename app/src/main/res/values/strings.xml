@@ -36,7 +36,7 @@
     <!-- Label for the supplier section [CHAR LIMIT=10] -->
     <string name="supplier_label">Supplier</string>
 
-    <!-- Text of the hint in EditText with ID edit_supplier_name[CHAR LIMIT=15] -->
+    <!-- Text of the hint in EditText with ID edit_supplier_name[CHAR LIMIT=20] -->
     <string name="supplier_name_hint">Supplier Name</string>
 
     <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
@@ -45,10 +45,13 @@
     <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
     <string name="check">Check</string>
 
-    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=10] -->
     <string name="yes_out_of_print">Yes</string>
 
-    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=25] -->
+    <!-- Text of the hint in EditText with ID edit_supplier_phone_number[CHAR LIMIT=10] -->
     <string name="not_out_of_print">No</string>
+
+    <!-- Text of the message with the count of the books in the table [CHAR LIMIT=NONE] -->
+    <string name="book_count_message">The books table contains %d book titles.;\n</string>
 
 </resources>

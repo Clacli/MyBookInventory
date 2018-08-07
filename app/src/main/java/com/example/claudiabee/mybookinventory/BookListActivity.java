@@ -122,6 +122,11 @@ public class BookListActivity extends AppCompatActivity {
         TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
 
         try {
+            // This line of code is very important, it prevents the results of the query
+            // to be displayed multiple times after a record book insertion.
+            // By the way it displays the count of the book records in the books table
+            // of the database.
+            displayRecordsView.setText(String.format(getString(R.string.book_count_message), cursor.getCount()));
             // Find the index for each of the selected column
             int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
             int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
