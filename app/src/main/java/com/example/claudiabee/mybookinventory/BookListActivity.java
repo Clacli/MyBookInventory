@@ -17,12 +17,15 @@ import android.widget.Toast;
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+/**
+ * Displays a list of books stored in a database
+ */
 public class BookListActivity extends AppCompatActivity {
 
-    // This String constant is used for logging
+    /** This String constant is used for logging */
     public final static String LOG_TAG = BookListActivity.class.getSimpleName();
 
-    // This database helper class helps crating, opening, modifying the existing databases.
+    /** This database helper class helps crating, opening, modifying the existing databases. */
     private MyBookInventoryDbHelper mMyBookInventoryDbHelper;
 
     @Override
@@ -30,8 +33,9 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
 
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
+        // To access our database, we create an instance of MyBookInventoryDbHelper,
+        // subclass of SQLiteOpenHelper, and pass the context, which is the current activity,
+        // as argument.
         mMyBookInventoryDbHelper = new MyBookInventoryDbHelper(this);
 
         /**
@@ -95,6 +99,7 @@ public class BookListActivity extends AppCompatActivity {
 
         // Define a projection String
         String[] projection = {
+                BookEntry._ID,
                 BookEntry.COLUMN_BOOK_TITLE,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
@@ -113,11 +118,13 @@ public class BookListActivity extends AppCompatActivity {
                 );
 
 
-         // This TextView displays the list of books saved in the books table of the bookshop database.
+        //This TextView displays the list of books saved in the books table of the bookshop database.
         TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
 
         try {
+            //displayRecordsView.setText("The books table contains " + cursor.getCount() + " book titles.\n\n");
             // Find the index for each of the selected column
+            int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
             int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
             int bookPriceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int bookQuantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
@@ -127,6 +134,7 @@ public class BookListActivity extends AppCompatActivity {
             // extract the desired String, double and int values using the indices obtained
             // above.
             while (cursor.moveToNext()) {
+                int currentID = cursor.getInt(idColumnIndex);
                 String currentBookTitle = cursor.getString(bookTitleColumnIndex);
                 double currentBookPrice = cursor.getDouble(bookPriceColumnIndex);
                 int currentBookQuantity = cursor.getInt(bookQuantityColumnIndex);
@@ -134,7 +142,8 @@ public class BookListActivity extends AppCompatActivity {
 
                 // Display the values just retrieved from this row on the screen
                 displayRecordsView.append(
-                        "\n" + currentBookTitle + " - "
+                        "\n" + currentID + " - "
+                             + currentBookTitle + " - "
                              + currentBookPrice + " - "
                              + currentBookQuantity + " - "
                              + currentSupplierName + "\n");
@@ -156,6 +165,7 @@ public class BookListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Insert sample data in database
         insertBook();
+
         return super.onOptionsItemSelected(item);
     }
 }
