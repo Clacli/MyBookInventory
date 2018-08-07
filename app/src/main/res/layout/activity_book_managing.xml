@@ -133,6 +133,7 @@
         style="@style/FabStyle"
         app:layout_constraintBottom_toTopOf="@+id/edit_book_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

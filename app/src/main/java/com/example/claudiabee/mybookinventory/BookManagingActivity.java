@@ -52,7 +52,7 @@ public class BookManagingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_managing);
+        setContentView(R.layout.activity_book_edit);
 
         // Instantiate the EditText that we will need to read user input from
         mEditBookTitle = (EditText) findViewById(R.id.edit_book_title);

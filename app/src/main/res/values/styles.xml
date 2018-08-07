@@ -32,6 +32,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/fab_layout_margin</item>
         <item name="android:src">@drawable/ic_add</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
     </style>
 
 </resources>

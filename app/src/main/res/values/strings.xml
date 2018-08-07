@@ -52,6 +52,6 @@
     <string name="not_out_of_print">No</string>
 
     <!-- Text of the message with the count of the books in the table [CHAR LIMIT=NONE] -->
-    <string name="book_count_message">The books table contains %d book titles.;\n</string>
+    <string name="book_count_message">The books table contains %d book titles:\n</string>
 
 </resources>
