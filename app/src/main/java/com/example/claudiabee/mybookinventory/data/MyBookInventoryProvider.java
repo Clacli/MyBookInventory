@@ -19,7 +19,8 @@ public class MyBookInventoryProvider extends ContentProvider {
     MyBookInventoryDbHelper myBookInventoryDbHelper;
 
     /**
-     * Initialize the provider and  the database object
+     * Initialize the provider and  the database object to gain access to the database.
+     * It is called on the main thread.
      */
     @Override
     public boolean onCreate() {
@@ -44,8 +45,11 @@ public class MyBookInventoryProvider extends ContentProvider {
     }
 
     /**
-     * @param uri uri is the given URI which specify the data we want to interact with
-     * @return the MIME type of data for the content URI
+     * @param    uri uri is the given URI which specify the data we want to interact with
+     * @return   the MIME type of data for the content URI which should start with
+     *           vnd.android.cursor.item for a single record, or
+     *           vnd.android.cursor.dir/ for multiple items or
+     *           null if there is no type..
      */
     @Nullable
     @Override
@@ -56,9 +60,9 @@ public class MyBookInventoryProvider extends ContentProvider {
     /**
      * Insert new data into the provider with the given ContentValues.
      *
-     * @param uri    is what specifies the resources we want to interact with.
-     * @param values are the values to insert into the database
-     * @return uri is the location of the resource inserted
+     * @param   uri    is what specifies the resources we want to interact with.
+     * @param   values are the values to insert into the database
+     * @return  uri is the uri which specifies the location of the inserted resource.
      */
     @Nullable
     @Override
