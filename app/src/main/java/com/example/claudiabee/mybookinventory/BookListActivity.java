@@ -122,7 +122,6 @@ public class BookListActivity extends AppCompatActivity {
         TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
 
         try {
-            //displayRecordsView.setText("The books table contains " + cursor.getCount() + " book titles.\n\n");
             // Find the index for each of the selected column
             int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
             int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
