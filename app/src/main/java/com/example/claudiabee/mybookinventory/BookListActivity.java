@@ -79,6 +79,7 @@ public class BookListActivity extends AppCompatActivity {
         long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
         Log.v(LOG_TAG, "New row ID: " + newRowId);
         Toast.makeText(this, "Number of books into the database: " + newRowId, Toast.LENGTH_SHORT).show();
+        queryBookData();
     }
 
     /**
