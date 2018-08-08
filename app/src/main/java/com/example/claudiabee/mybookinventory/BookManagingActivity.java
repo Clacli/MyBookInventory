@@ -17,7 +17,7 @@ import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookE
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 
 /**
- * In this Activity the user can create a new pet and store it in a database.
+ * In this Activity the user can create a new book and store it in a database.
  */
 public class BookManagingActivity extends AppCompatActivity {
 

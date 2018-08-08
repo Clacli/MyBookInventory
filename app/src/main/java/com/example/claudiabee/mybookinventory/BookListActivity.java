@@ -94,29 +94,21 @@ public class BookListActivity extends AppCompatActivity {
      */
     private void queryBookData(){
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mMyBookInventoryDbHelper.getReadableDatabase();
-
-        // Define a projection String
+        // Define a projection array of strings
         String[] projection = {
-                BookEntry._ID,
                 BookEntry.COLUMN_BOOK_TITLE,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
-                BookEntry.COLUMN_BOOK_SUPPLIER_NAME
         };
 
-        // Perform a query to get a Cursor that contains all rows from the books table.
-        Cursor cursor = db.query(
-                BookEntry.TABLE_NAME,
+        // Perform a query on the Content Provider through the Content Resolver to get a
+        // Cursor object,that contains id, product name, price and quantity rows.
+        Cursor cursor = getContentResolver().query(
+                BookEntry.CONTENT_URI,
                 projection,
                 null,
                 null,
-                null,
-                null,
-                null
-                );
-
+                null);
 
         //This TextView displays the list of books saved in the books table of the bookshop database.
         TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
@@ -128,29 +120,23 @@ public class BookListActivity extends AppCompatActivity {
             // of the database.
             displayRecordsView.setText(String.format(getString(R.string.book_count_message), cursor.getCount()));
             // Find the index for each of the selected column
-            int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
             int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
             int bookPriceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int bookQuantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-            int bookSupplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
 
             // Loop through each row of the cursor, and at each position of the cursor
             // extract the desired String, double and int values using the indices obtained
             // above.
             while (cursor.moveToNext()) {
-                int currentID = cursor.getInt(idColumnIndex);
                 String currentBookTitle = cursor.getString(bookTitleColumnIndex);
                 double currentBookPrice = cursor.getDouble(bookPriceColumnIndex);
                 int currentBookQuantity = cursor.getInt(bookQuantityColumnIndex);
-                String currentSupplierName = cursor.getString(bookSupplierNameColumnIndex);
 
                 // Display the values just retrieved from this row on the screen
                 displayRecordsView.append(
-                        "\n" + currentID + " - "
-                             + currentBookTitle + " - "
+                        "\n" + currentBookTitle + " - "
                              + currentBookPrice + " - "
-                             + currentBookQuantity + " - "
-                             + currentSupplierName + "\n");
+                             + currentBookQuantity + "\n");
             }
         } finally {
             // Close the cursor and release all of its resources
