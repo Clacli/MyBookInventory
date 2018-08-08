@@ -1,9 +1,11 @@
 package com.example.claudiabee.mybookinventory.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +21,12 @@ public class MyBookInventoryProvider extends ContentProvider {
     public static final String LOG_TAG = MyBookInventoryProvider.class.getSimpleName();
 
     /** URI matcher code for the content URI for the books table */
-    private static final int PETS = 100;
+    private static final int BOOKS = 100;
 
-    /** URI matcher code of the content URI for a single pet in the pets table */
-    private static final int PET_ID = 101;
+    /** URI matcher code of the content URI for a single book in the books table */
+    private static final int BOOK_ID = 101;
 
-    /** UriMatcher object to match a content URI to a corresponding code.
+    /** UriMatcher object matches a content URI to a corresponding code.
      *  The input passed into the constructor represent the code to return for the root URI.
      *  It's common to use NO_MATCH as the input for this case.
      */
@@ -32,9 +34,9 @@ public class MyBookInventoryProvider extends ContentProvider {
 
     // Static initializer. This is run the first time anything is called from this class.
     static {
-        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS, PETS);
+        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS, BOOKS);
 
-        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS + "/#", PET_ID);
+        sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS + "/#", BOOK_ID);
     }
 
     /** Database helper object */
@@ -62,8 +64,38 @@ public class MyBookInventoryProvider extends ContentProvider {
      */
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection,
+                        @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        // Access the database in read mode
+        SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getReadableDatabase();
+
+        // The cursor holding the result of the query
+        Cursor cursor;
+
+        // This variable stores an integer value to be used in the switch statement below
+        int match = sUriMatcher.match(uri);
+
+        // decide whether to query the table or a single row
+        switch (match) {
+            case BOOKS:
+                // Perform a query on the PETS table
+                cursor = bookshopDb.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+            case BOOK_ID:
+                // Selection and selectionArgs point to a specific row
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+
+                // Perform a query on the books table for a specific row.
+                cursor = bookshopDb.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query unknown URI" + uri);
+
+        }
+        return cursor;
     }
 
     /**
