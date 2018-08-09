@@ -1,7 +1,7 @@
 package com.example.claudiabee.mybookinventory;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
-import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 
 /**
  * In this Activity the user can create a new book and store it in a database.
@@ -118,12 +117,6 @@ public class BookManagingActivity extends AppCompatActivity {
      */
     private void insertBook() {
 
-        // Get an instance of the MyBookInventoryDbHelper to access and manage the database
-        MyBookInventoryDbHelper myBookInventoryDbHelper = new MyBookInventoryDbHelper(this);
-
-        // Get a database in write mode
-        SQLiteDatabase db = myBookInventoryDbHelper.getWritableDatabase();
-
         // Get the input entered by the user from the EditText
         String bookTitle = mEditBookTitle.getText().toString().trim();
         double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
@@ -131,7 +124,7 @@ public class BookManagingActivity extends AppCompatActivity {
         String supplierName = mEditSupplierName.getText().toString().trim();
         String supplierPhoneNumber = mEditSupplierPhoneNumber.getText().toString().trim();
 
-        // Create an instance of the ContentValues object
+        // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
 
         // Populate the ContentValues object with
@@ -144,17 +137,16 @@ public class BookManagingActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
 
-        // Insert ContentValues into the database and store the returned ID of the
+        // Insert ContentValues into the database and store the returned URI of the
         // newly inserted row into variable of type long
-        long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
 
         // Display in a toast message the ID of the newly row or an error message
         // in case of failed insertion
-        if (newRowId == -1) {
-            Toast.makeText(this, "Error with saving book", Toast.LENGTH_SHORT).show();
+        if (newUri == null) {
+            Toast.makeText(this, R.string.insert_error_text, Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Book saved with ID " + newRowId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.successful_insert_text, Toast.LENGTH_LONG).show();
         }
-
     }
 }

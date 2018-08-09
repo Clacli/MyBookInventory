@@ -3,7 +3,7 @@ package com.example.claudiabee.mybookinventory;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +42,13 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
 
+        // Create an instance of the ListView displaying the list of books of the inventory.
+        mBookListView = (ListView) findViewById(R.id.book_listview);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        mBookListView.setEmptyView(emptyView);
+
         // To access our database, we create an instance of MyBookInventoryDbHelper,
         // subclass of SQLiteOpenHelper, and pass the context, which is the current activity,
         // as argument.
@@ -69,15 +76,11 @@ public class BookListActivity extends AppCompatActivity {
 
     /**
      * This method, insert a hardcoded sample book into the database when clicking the
-     * "Add sample data" in the overflow menu
+     * "Add sample data" in the overflow menu.
      */
     private void insertBook() {
 
-        // Create and/or open a database in write mode
-        SQLiteDatabase db = mMyBookInventoryDbHelper.getWritableDatabase();
-
-        // Create an object containing key-values pair with data to insert into the books table of
-        // the database.
+        // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
         // Populate the instance of the ContentValues class with data about a book
         values.put(BookEntry.COLUMN_BOOK_TITLE, "Il manuale del fitopreparatore");
@@ -87,12 +90,18 @@ public class BookListActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, "OldBooksSupplier");
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, "2025550122");
 
-        // Inserting data, this method returns the ID of the newly inserted rows.
-        // returns -1 in case of error.
-        long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
-        Log.v(LOG_TAG, "New row ID: " + newRowId);
-        Toast.makeText(this, "Number of books into the database: " + newRowId, Toast.LENGTH_SHORT).show();
-        queryBookData();
+        // Inserting data, insert a new row for the sample book into the provider
+        // using the ContentResolver.
+        // {@link CONTENT_URI} specifies where we want to insert the new data (the books table).
+        // This method returns the a new content URI related to the book just saved
+        Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+        Log.v(LOG_TAG, "New row ID: " + newUri);
+        if (newUri == null){
+            Toast.makeText(this, R.string.insert_error_text, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.successful_insert_text, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     /**
@@ -120,9 +129,6 @@ public class BookListActivity extends AppCompatActivity {
                 null,
                 null);
 
-        // Create an instance of the ListView displaying the list of books of the inventory.
-        mBookListView = (ListView) findViewById(R.id.book_listview);
-
         // Setup a CursorAdapter to create list item view to which bind book data found at each row.
         mBookCursorAdapter = new MyBookInventoryCursorAdapter(this, cursor);
 
@@ -141,7 +147,7 @@ public class BookListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Insert sample data in database
         insertBook();
-
+        queryBookData();
         return super.onOptionsItemSelected(item);
     }
 }

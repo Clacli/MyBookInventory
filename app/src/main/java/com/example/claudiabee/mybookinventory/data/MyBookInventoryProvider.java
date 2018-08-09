@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
@@ -121,7 +122,37 @@ public class MyBookInventoryProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        // Check if there is a match
+        final int match = sUriMatcher.match(uri);
+        // Only the BOOKS case is supported for insertion,
+        // any other case falls in the default case throwing an exception..
+        switch (match){
+            case BOOKS:
+                return insertBook(uri, values);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
+    }
+
+    /**
+     * Insert a pet into the database with the given content values. Return the new content URI
+     * for that specific row in the database.
+     */
+    private Uri insertBook(Uri uri, ContentValues values) {
+
+        // Access the database in write mode.
+        SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
+
+        // Insert the new book record with the given values
+        long newRowId = bookshopDb.insert(BookEntry.TABLE_NAME, null, values);
+
+        // If the ID is -1, the insertion failed.
+        if (newRowId == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+        // Append new row ID to CONTENT_URI returning the new URI of the last inserted record
+        return ContentUris.withAppendedId(BookEntry.CONTENT_URI, newRowId);
     }
 
     /**

@@ -54,7 +54,13 @@
     <!-- Title text for the empty view, which describes an empty shelf  [CHAR LIMIT=50] -->
     <string name="empty_view_title_text">There are no books on the shelf&#8230;</string>
 
-    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
+    <!-- Subtitle text for the empty view that prompts the user to add a book [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Press the blue button and add a book!</string>
+
+    <!-- Text for the "Book saved" message [CHAR LIMIT=50] -->
+    <string name="successful_insert_text">Book saved</string>
+
+    <!-- Text for the error message while saving book [CHAR LIMIT=50] -->
+    <string name="insert_error_text">Error while saving book</string>
 
 </resources>
