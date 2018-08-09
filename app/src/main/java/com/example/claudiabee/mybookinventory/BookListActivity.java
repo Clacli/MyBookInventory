@@ -55,14 +55,14 @@ public class BookListActivity extends AppCompatActivity {
         mMyBookInventoryDbHelper = new MyBookInventoryDbHelper(this);
 
         /**
-         * When this Fab gets clicked an intent is sent to start the BookManagingActivity
+         * When this Fab gets clicked an intent is sent to start the AddBookActivity
          */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // When the Fab is clicked an intent is sent to open the BookManagingActivity
-                startActivity(new Intent(BookListActivity.this, BookManagingActivity.class));
+                // When the Fab is clicked an intent is sent to open the AddBookActivity
+                startActivity(new Intent(BookListActivity.this, AddBookActivity.class));
             }
         });
     }

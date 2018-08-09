@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BookManagingActivity"
+            android:name=".AddBookActivity"
             android:label="@string/add_a_book_label"
             android:parentActivityName=".BookListActivity">
             <!-- Parent activity meta-data to support 4.0 version and lower -->

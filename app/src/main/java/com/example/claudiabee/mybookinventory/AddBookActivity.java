@@ -18,10 +18,10 @@ import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookE
 /**
  * In this Activity the user can create a new book and store it in a database.
  */
-public class BookManagingActivity extends AppCompatActivity {
+public class AddBookActivity extends AppCompatActivity {
 
     /** This String constants is for logging */
-    public static final String LOG_TAG = BookManagingActivity.class.getSimpleName();
+    public static final String LOG_TAG = AddBookActivity.class.getSimpleName();
 
     /** EditText field to enter the name of the new book to insert into a database */
     private EditText mEditBookTitle;

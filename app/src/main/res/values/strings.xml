@@ -9,7 +9,7 @@
     <!-- Label for overflow menu option that deletes all book records in the db [CHAR LIMIT=20] -->
     <string name="action_delete_all_data">Delete All Books</string>
 
-    <!-- Label for the BookManagingActivity [CHAR LIMIT=10] -->
+    <!-- Label for the AddBookActivity [CHAR LIMIT=10] -->
     <string name="add_a_book_label">Add a Book</string>
 
     <!-- Label for the BookListActivity [CHAR LIMIT=20] -->
