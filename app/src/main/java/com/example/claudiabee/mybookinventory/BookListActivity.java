@@ -11,11 +11,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
+import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 
 /**
  * Displays a list of books stored in a database
@@ -27,6 +27,15 @@ public class BookListActivity extends AppCompatActivity {
 
     /** This database helper class helps crating, opening, modifying the existing databases. */
     private MyBookInventoryDbHelper mMyBookInventoryDbHelper;
+
+    /** This is the ListView that displays the list of books */
+    ListView mBookListView;
+
+    /**
+     *  This is the Cursor Adapter used to inflate list item views to which bind data to be
+     * displayed in the ListView
+     */
+    MyBookInventoryCursorAdapter mBookCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +103,9 @@ public class BookListActivity extends AppCompatActivity {
      */
     private void queryBookData(){
 
-        // Define a projection array of strings
+        // Define a projection that specifies the column from the database to use in the query
         String[] projection = {
+                BookEntry._ID,
                 BookEntry.COLUMN_BOOK_TITLE,
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
@@ -110,38 +120,14 @@ public class BookListActivity extends AppCompatActivity {
                 null,
                 null);
 
-        //This TextView displays the list of books saved in the books table of the bookshop database.
-        TextView displayRecordsView = (TextView) findViewById(R.id.book_text_view);
+        // Create an instance of the ListView displaying the list of books of the inventory.
+        mBookListView = (ListView) findViewById(R.id.book_listview);
 
-        try {
-            // This line of code is very important, it prevents the results of the query
-            // to be displayed multiple times after a record book insertion.
-            // By the way it displays the count of the book records in the books table
-            // of the database.
-            displayRecordsView.setText(String.format(getString(R.string.book_count_message), cursor.getCount()));
-            // Find the index for each of the selected column
-            int bookTitleColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE);
-            int bookPriceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
-            int bookQuantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
+        // Setup a CursorAdapter to create list item view to which bind book data found at each row.
+        mBookCursorAdapter = new MyBookInventoryCursorAdapter(this, cursor);
 
-            // Loop through each row of the cursor, and at each position of the cursor
-            // extract the desired String, double and int values using the indices obtained
-            // above.
-            while (cursor.moveToNext()) {
-                String currentBookTitle = cursor.getString(bookTitleColumnIndex);
-                double currentBookPrice = cursor.getDouble(bookPriceColumnIndex);
-                int currentBookQuantity = cursor.getInt(bookQuantityColumnIndex);
-
-                // Display the values just retrieved from this row on the screen
-                displayRecordsView.append(
-                        "\n" + currentBookTitle + " - "
-                             + currentBookPrice + " - "
-                             + currentBookQuantity + "\n");
-            }
-        } finally {
-            // Close the cursor and release all of its resources
-            cursor.close();
-        }
+        // Set the cursor adapter on the Listview
+        mBookListView.setAdapter(mBookCursorAdapter);
     }
 
     @Override

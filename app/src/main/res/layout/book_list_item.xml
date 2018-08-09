@@ -21,11 +21,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
+
+        <Button
+            android:id="@+id/sale_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Sale"/>
+
+
+        <LinearLayout
         android:id="@+id/price_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:padding="8dp">
 
         <TextView
@@ -54,6 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/price_container"
         android:padding="8dp">
 
@@ -72,15 +85,6 @@
             tools:text="7"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/sale_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="Sale"/>
 
     </RelativeLayout>
 

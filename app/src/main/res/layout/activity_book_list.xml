@@ -6,13 +6,10 @@
     android:padding="@dimen/root_view_padding"
     tools:context=".BookListActivity">
 
-    <TextView
-        android:id="@+id/book_text_view"
+    <ListView
+        android:id="@+id/book_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textSize="@dimen/text_size"/>
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
