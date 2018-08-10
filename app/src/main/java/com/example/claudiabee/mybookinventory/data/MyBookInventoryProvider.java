@@ -67,8 +67,10 @@ public class MyBookInventoryProvider extends ContentProvider {
      * Perform the query for the given URI.
      *
      * @param uri           is the given URI which specifies the resource we are interested in
-     * @param projection    is an array which specifies the column/s of the database we want back in the Cursor
-     * @param selection     is a selection of the constraints which help to narrow the results of the query
+     * @param projection    is an array which specifies the column/s of the database we want back
+     *                      in the Cursor
+     * @param selection     is a selection of the constraints which help to narrow the results of
+     *                      the query
      * @param selectionArgs are the values associated with the selection, inserted here for safety.
      * @param sortOrder     is the order in which the result of the query is presented
      * @return a Cursor object
@@ -86,7 +88,7 @@ public class MyBookInventoryProvider extends ContentProvider {
         // This variable stores an integer value to be used in the switch statement below
         int match = sUriMatcher.match(uri);
 
-        // decide whether to query the table or a single row
+        // Check whether to query the table or a single row
         switch (match) {
             case BOOKS:
                 // Perform a query on the BOOKS table
@@ -104,7 +106,6 @@ public class MyBookInventoryProvider extends ContentProvider {
                 break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI" + uri);
-
         }
         return cursor;
     }
@@ -125,7 +126,7 @@ public class MyBookInventoryProvider extends ContentProvider {
     /**
      * Insert new data into the provider with the given ContentValues.
      *
-     * @param uri    is what specifies the resources we want to interact with.
+     * @param uri    specifies where are the resources we want to interact with.
      * @param values are the values to insert into the database
      * @return uri is the uri which specifies the location of the inserted resource.
      */
@@ -145,8 +146,8 @@ public class MyBookInventoryProvider extends ContentProvider {
     }
 
     /**
-     * Insert a book into the database with the given content values. Return the new content URI
-     * for that specific row in the database.
+     * Insert a book into the database with the given values. Return the new content URI
+     * for the the bookn that was just inserted into the database.
      */
     private Uri insertBook(Uri uri, ContentValues values) {
 
@@ -166,7 +167,7 @@ public class MyBookInventoryProvider extends ContentProvider {
         // Check that the quantity is not null and its value is equal to 0 or a positive number
         Integer bookQuantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
         if ((bookQuantity == null) || (bookQuantity < 0)) {
-            throw new IllegalArgumentException("Valid price required");
+            throw new IllegalArgumentException("Valid quantity required");
         }
 
 
@@ -174,7 +175,8 @@ public class MyBookInventoryProvider extends ContentProvider {
         // {@link #CHECK_IF_OUT_OF_PRINT}, {@link #NOT_OUT_OF_PRINT} or {@link #IS_OUT_OF_PRINT}.
         Integer production_info = values.getAsInteger(BookEntry.COLUMN_BOOK_PRODUCTION_INFO);
         if (production_info == null || !BookEntry.isValidInfo(production_info)) {
-            throw new IllegalArgumentException("A valid information on whether the book is out of print or not is required");
+            throw new IllegalArgumentException(
+                    "A valid information on whether the book is out of print or not is required");
         }
 
         // Check that the name of the supplier of books is not null
@@ -214,7 +216,24 @@ public class MyBookInventoryProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        // Get an instance of the SQLite database in write mode
+        SQLiteDatabase booshopDB = myBookInventoryDbHelper.getWritableDatabase();
+
+        // Check if there is m match with the given uri
+        final int match = sUriMatcher.match(uri);
+
+        // Both the BOOKS case and the BOOK_ID are supported for deletion
+        switch (match) {
+            case BOOKS:
+                // Delete multiple rows according to the selection and selectionArgs
+                return booshopDB.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+            case BOOK_ID:
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return booshopDB.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
     }
 
     /**
@@ -228,14 +247,15 @@ public class MyBookInventoryProvider extends ContentProvider {
      * @return the number of rows updated
      */
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public int update(@NonNull Uri uri, @Nullable ContentValues values,
+                      @Nullable String selection, @Nullable String[] selectionArgs) {
 
         // Check if there is a match with the given uri
         final int match = sUriMatcher.match(uri);
         // Both the BOOKS case and the BOOK_ID are supported for insertion
         switch (match) {
             case BOOKS:
-                // Updete multiple rows according to the selection and selection args
+                // Update multiple rows according to the selection and selectionArgs
                 return updateBook(uri, values, selection, selectionArgs);
             case BOOK_ID:
                 // Update just one row the ID of which is contained in selectionArgs.
