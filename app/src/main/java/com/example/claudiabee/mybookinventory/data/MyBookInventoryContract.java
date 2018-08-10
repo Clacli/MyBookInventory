@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory.data;
 
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -11,24 +12,28 @@ import android.provider.BaseColumns;
  */
 public final class MyBookInventoryContract {
 
-    // Empty private constructor for the MyBookInventoryContract, to prevent it to be instantiated by mistake.
-    // The contract is for defining the table and the constants referred to the column
-    // of the books database.
-    private MyBookInventoryContract() {
-    }
-
-    /** This string is the content authority used to identify the Content Provider */
+    /**
+     * This string is the content authority used to identify the Content Provider
+     */
     public static final String CONTENT_AUTHORITY = "com.example.claudiabee.mybookinventory";
-
-    /** This URI will be shared by every URI associated with the ContractClass */
+    /**
+     * This URI will be shared by every URI associated with the ContractClass
+     */
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-
-    /** This constant String stores the path for the books table, which will be appended
+    /**
+     * This constant String stores the path for the books table, which will be appended
      * to the BASE_CONTENT_URI to form a complete CONTENT_URI. In the contract there must be
      * defined a path to each table present in the database. At the moment in this app the database
      * has one table so only one path must be defined in a constant string
      */
     public static final String PATH_BOOKS = "books";
+
+    // Empty private constructor for the MyBookInventoryContract, to prevent it to be instantiated
+    // by mistake.
+    // The contract is only for defining the table and the constants referred to the column
+    // of the books database.
+    private MyBookInventoryContract() {
+    }
 
     /**
      * Inner class that defines constants values for the books table of the bookshop database.
@@ -37,8 +42,22 @@ public final class MyBookInventoryContract {
      */
     public static final class BookEntry implements BaseColumns {
 
-        /** Complete CONTENT URI for the BookEntry class to access data in the books table */
+        /**
+         * Complete CONTENT URI for the BookEntry class to access data in the provider
+         */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a list of books
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a single book.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
 
         /**
          * Name of the books table of the bookshop.db
@@ -46,7 +65,7 @@ public final class MyBookInventoryContract {
         public static final String TABLE_NAME = "books";
 
         /**
-         * Unique ID number for the book.
+         * Unique ID number for the book (row).
          * <p>
          * Type: INTEGER
          */
@@ -103,7 +122,7 @@ public final class MyBookInventoryContract {
         public static final int IS_OUT_OF_PRINT = 2;
 
         /**
-         * Returns whether or not the given gender is {@link #CHECK_IF_OUT_OF_PRINT},
+         * Returns whether or not the given information is {@link #CHECK_IF_OUT_OF_PRINT},
          * {@link #NOT_OUT_OF_PRINT} or {@link #IS_OUT_OF_PRINT}.
          */
         public static boolean isValidInfo(int production_info) {

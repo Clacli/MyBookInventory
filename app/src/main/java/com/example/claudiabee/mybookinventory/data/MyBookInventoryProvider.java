@@ -54,7 +54,7 @@ public class MyBookInventoryProvider extends ContentProvider {
     private MyBookInventoryDbHelper myBookInventoryDbHelper;
 
     /**
-     * Initialize the provider and  the database helper to gain access to the database.
+     * Initialize the provider and the database helper to gain access to the database.
      * It is called on the main thread.
      */
     @Override
@@ -120,7 +120,15 @@ public class MyBookInventoryProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BOOKS:
+                return BookEntry.CONTENT_LIST_TYPE;
+            case BOOK_ID:
+                return BookEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + "with match " + match);
+        }
     }
 
     /**
@@ -147,7 +155,7 @@ public class MyBookInventoryProvider extends ContentProvider {
 
     /**
      * Insert a book into the database with the given values. Return the new content URI
-     * for the the bookn that was just inserted into the database.
+     * for the the book that was just inserted into the database.
      */
     private Uri insertBook(Uri uri, ContentValues values) {
 
@@ -217,7 +225,7 @@ public class MyBookInventoryProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         // Get an instance of the SQLite database in write mode
-        SQLiteDatabase booshopDB = myBookInventoryDbHelper.getWritableDatabase();
+        SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
 
         // Check if there is m match with the given uri
         final int match = sUriMatcher.match(uri);
@@ -226,11 +234,11 @@ public class MyBookInventoryProvider extends ContentProvider {
         switch (match) {
             case BOOKS:
                 // Delete multiple rows according to the selection and selectionArgs
-                return booshopDB.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                return bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
             case BOOK_ID:
                 selection = BookEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return booshopDB.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                return bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
@@ -239,17 +247,16 @@ public class MyBookInventoryProvider extends ContentProvider {
     /**
      * Updates the data at the given selection and selection arguments, with the new ContentValues.
      *
-     * @param uri           is what specifies the resources we want to interact with.
+     * @param uri           is what specifies where are the resources we want to interact with.
      * @param values        are the values which update the database
-     * @param selection     selection is a selection of the constraints which help to define the set of data
-     *                      to update
+     * @param selection     selection is a selection of the constraints which help to define the
+     *                      set of data to update
      * @param selectionArgs are the values associated with the given selection
      * @return the number of rows updated
      */
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values,
                       @Nullable String selection, @Nullable String[] selectionArgs) {
-
         // Check if there is a match with the given uri
         final int match = sUriMatcher.match(uri);
         // Both the BOOKS case and the BOOK_ID are supported for insertion
@@ -273,11 +280,6 @@ public class MyBookInventoryProvider extends ContentProvider {
      * Return the number of rows successfully updated.
      */
     private int updateBook(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-
-        // If there are no values to update don't try to update the database
-        if (values.size() == 0) {
-            return 0;
-        }
 
         // If the {@link BookEntry#COLUMN_BOOK_TITLE} key is present,
         // check that the name value is not null.
@@ -314,7 +316,8 @@ public class MyBookInventoryProvider extends ContentProvider {
         if (values.containsKey(BookEntry.COLUMN_BOOK_PRODUCTION_INFO)) {
             Integer production_info = values.getAsInteger(BookEntry.COLUMN_BOOK_PRODUCTION_INFO);
             if (production_info == null || !BookEntry.isValidInfo(production_info)) {
-                throw new IllegalArgumentException("A valid information on whether the book is out of print or not is required");
+                throw new IllegalArgumentException(
+                        "A valid information on whether the book is out of print or not is required");
             }
         }
 
@@ -332,8 +335,13 @@ public class MyBookInventoryProvider extends ContentProvider {
         if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER)) {
             Long supplierPhoneNumber = values.getAsLong(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER);
             if ((supplierPhoneNumber == null) || (supplierPhoneNumber < 0)) {
-                throw new IllegalArgumentException("A valid supplier's phone number is required");
+                throw new IllegalArgumentException("A valid supplier\'s phone number is required");
             }
+        }
+
+        // If there are no values to update don't try to update the database
+        if (values.size() == 0) {
+            return 0;
         }
 
         // Access the database in write mode.
