@@ -86,7 +86,7 @@ public class BookListActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_TITLE, "Il manuale del fitopreparatore");
         values.put(BookEntry.COLUMN_BOOK_PRICE, 30.00);
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, 1);
-        values.put(BookEntry.COLUMN_BOOK_OUT_OF_PRINT, BookEntry.IS_OUT_OF_PRINT);
+        values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, BookEntry.IS_OUT_OF_PRINT);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, "OldBooksSupplier");
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, 2025550122);
 

@@ -76,13 +76,13 @@
         android:layout_marginStart="@dimen/out_of_print_side_margin"
         android:text="@string/out_of_print_label"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/out_of_print_spinner"
+        app:layout_constraintBottom_toBottomOf="@+id/info_on_book_production_spinner"
         app:layout_constraintEnd_toEndOf="@+id/book_label"
         app:layout_constraintStart_toEndOf="@+id/currency" />
 
     <!-- Out of print drop-down spinner -->
     <Spinner
-        android:id="@+id/out_of_print_spinner"
+        android:id="@+id/info_on_book_production_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/spinner_height"
         android:layout_marginBottom="@dimen/spinner_margin_bottom"

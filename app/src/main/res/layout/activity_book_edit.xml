@@ -74,7 +74,7 @@
 
         <!-- Out of print drop-down spinner -->
         <Spinner
-            android:id="@+id/out_of_print_spinner"
+            android:id="@+id/info_on_book_production_spinner"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/spinner_height"
             android:spinnerMode="dropdown" />

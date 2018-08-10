@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- These are the options displayed in the out_of_print drop-down Spinner -->
-    <string-array name="array_out_of_print_options">
+    <!-- These are the options displayed in the Spinner with the information on the book production -->
+    <string-array name="array_production_info_options">
         <item>@string/check</item>
         <item>@string/not_out_of_print</item>
         <item>@string/yes_out_of_print</item>

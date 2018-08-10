@@ -91,13 +91,13 @@
         android:textSize="@dimen/text_size"
         app:layout_constraintBaseline_toBaselineOf="@id/edit_book_price"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/out_of_print_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/info_on_book_production_spinner"
         app:layout_constraintStart_toEndOf="@+id/currency"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Out of print drop-down spinner -->
     <Spinner
-        android:id="@+id/out_of_print_spinner"
+        android:id="@+id/info_on_book_production_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/spinner_height"
         android:layout_marginBottom="@dimen/land_spinner_margin_bottom"

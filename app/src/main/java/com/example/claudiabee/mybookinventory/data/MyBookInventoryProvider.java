@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
@@ -140,6 +141,45 @@ public class MyBookInventoryProvider extends ContentProvider {
      */
     private Uri insertBook(Uri uri, ContentValues values) {
 
+        // Check that the product name , i.e. the book title, is not null
+        String bookTitle = values.getAsString(BookEntry.COLUMN_BOOK_TITLE);
+        if (TextUtils.isEmpty(bookTitle)) {
+            throw new IllegalArgumentException("The title of the book is a required field.");
+        }
+
+        // Check that the price of the book is not null and its value is equal to 0 or a
+        // positive number.
+        Double bookPrice = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
+        if ((bookPrice == null) || (bookPrice < 0))  {
+            throw new IllegalArgumentException("Valid price required");
+        }
+
+        // Check that the quantity is not null and its value is equal to 0 or a positive number
+        Integer bookQuantity = values.getAsInteger(BookEntry.COLUMN_BOOK_PRICE);
+        if ((bookQuantity == null) || (bookQuantity < 0)) {
+            throw new IllegalArgumentException("Valid price required");
+        }
+
+
+        // Check that the information on whether the book is out of print or not is equal to
+        // {@link #CHECK_IF_OUT_OF_PRINT}, {@link #NOT_OUT_OF_PRINT} or {@link #IS_OUT_OF_PRINT}.
+        Integer production_info = values.getAsInteger(BookEntry.COLUMN_BOOK_PRODUCTION_INFO);
+        if (production_info == null || !BookEntry.isValidInfo(production_info)) {
+            throw new IllegalArgumentException("A valid information on whether the book is out of print or not is required");
+        }
+
+        // Check that the name of the supplier of books is not null
+        String supplierName = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
+        if (TextUtils.isEmpty(supplierName)) {
+            throw new IllegalArgumentException("The supplier\'s name is required");
+        }
+
+        // Check that the phone number is not null and its value is equal to 0 or a positive number
+        Long supplierPhoneNumber = values.getAsLong(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER);
+        if ((supplierPhoneNumber == null) || (supplierPhoneNumber < 0)) {
+            throw new IllegalArgumentException("A valid supplier's phone number is required");
+        }
+
         // Access the database in write mode.
         SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
 
@@ -151,7 +191,7 @@ public class MyBookInventoryProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
-        // Append new row ID to CONTENT_URI returning the new URI of the last inserted record
+        // Append new row ID to CONTENT_URI and return the new URI of the last inserted record
         return ContentUris.withAppendedId(BookEntry.CONTENT_URI, newRowId);
     }
 

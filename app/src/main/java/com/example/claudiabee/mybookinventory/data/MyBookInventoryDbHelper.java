@@ -50,7 +50,7 @@ public class MyBookInventoryDbHelper extends SQLiteOpenHelper {
                 BookEntry.COLUMN_BOOK_TITLE + " TEXT NOT NULL, " +
                 BookEntry.COLUMN_BOOK_PRICE + " REAL NOT NULL DEFAULT 0.00, " +
                 BookEntry.COLUMN_BOOK_QUANTITY + " INTEGER NOT NULL DEFAULT 0, " +
-                BookEntry.COLUMN_BOOK_OUT_OF_PRINT + " INTEGER NOT NULL,  " +
+                BookEntry.COLUMN_BOOK_PRODUCTION_INFO + " INTEGER NOT NULL,  " +
                 BookEntry.COLUMN_BOOK_SUPPLIER_NAME + " TEXT NOT NULL, " +
                 BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER + " INTEGER NOT NULL);";
         // Execute the SQL statement

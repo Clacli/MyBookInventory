@@ -75,11 +75,11 @@ public final class MyBookInventoryContract {
 
         /**
          * Information on whether the book {@link #IS_OUT_OF_PRINT}, it is {@link #NOT_OUT_OF_PRINT}
-         * or {@link #CHECK_OUT_OF_PRINT}.
+         * or {@link #CHECK_IF_OUT_OF_PRINT}.
          * <p>
          * Type: INTEGER
          */
-        public static final String COLUMN_BOOK_OUT_OF_PRINT = "out_of_print";
+        public static final String COLUMN_BOOK_PRODUCTION_INFO = "production_info";
 
         /**
          * The name of the supplier for the bookshop
@@ -96,11 +96,23 @@ public final class MyBookInventoryContract {
         public static final String COLUMN_BOOK_SUPPLIER_PHONE_NUMBER = "supplier_phone_number";
 
         /**
-         * Possible value for the information on the "out of print" state of the book.
+         * Possible value for the information on the production state of the book.
          */
-        public static final int CHECK_OUT_OF_PRINT = 0;
+        public static final int CHECK_IF_OUT_OF_PRINT = 0;
         public static final int NOT_OUT_OF_PRINT = 1;
         public static final int IS_OUT_OF_PRINT = 2;
+
+        /**
+         * Returns whether or not the given gender is {@link #CHECK_IF_OUT_OF_PRINT},
+         * {@link #NOT_OUT_OF_PRINT} or {@link #IS_OUT_OF_PRINT}.
+         */
+        public static boolean isValidInfo(int production_info) {
+            if (production_info == CHECK_IF_OUT_OF_PRINT || production_info == NOT_OUT_OF_PRINT ||
+                    production_info == IS_OUT_OF_PRINT) {
+                return true;
+            }
+            return false;
+        }
 
     }
 }

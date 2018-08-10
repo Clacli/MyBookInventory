@@ -39,14 +39,14 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText mEditSupplierPhoneNumber;
 
     /** Spinner from which to chose the option about the book being out of print or not */
-    private Spinner mOutOfPrintSpinner;
+    private Spinner mProductionInfoPrintSpinner;
 
     /**
      * Info whether the book is out of print or not. The possible valid values are:
-     * {@link BookEntry#CHECK_OUT_OF_PRINT}, {@link BookEntry#NOT_OUT_OF_PRINT},
+     * {@link BookEntry#CHECK_IF_OUT_OF_PRINT}, {@link BookEntry#NOT_OUT_OF_PRINT},
      * {@link BookEntry#IS_OUT_OF_PRINT}.
      */
-    private int mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
+    private int mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class AddBookActivity extends AppCompatActivity {
         mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
         mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
         mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
-        mOutOfPrintSpinner = (Spinner) findViewById(R.id.out_of_print_spinner);
+        mProductionInfoPrintSpinner = (Spinner) findViewById(R.id.info_on_book_production_spinner);
 
         // Find the Fab with ID == fab and set an action upon it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
@@ -82,32 +82,32 @@ public class AddBookActivity extends AppCompatActivity {
         // Create the adapter for the spinner. The list options from which the user choose,
         // are stored in the String array in arrays.xml, the spinner will use the default layout
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
-                R.array.array_out_of_print_options, android.R.layout.simple_spinner_item);
+                R.array.array_production_info_options, android.R.layout.simple_spinner_item);
 
         // Specify the layout style to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        mOutOfPrintSpinner.setAdapter(adapter);
+        mProductionInfoPrintSpinner.setAdapter(adapter);
 
         // Set the integer selected to the constant values
-        mOutOfPrintSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mProductionInfoPrintSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.not_out_of_print))) {
-                        mOutOfPrintInfo = BookEntry.NOT_OUT_OF_PRINT;
+                        mProductionInfo = BookEntry.NOT_OUT_OF_PRINT;
                     } else if (selection.equals(getString(R.string.yes_out_of_print))) {
-                        mOutOfPrintInfo = BookEntry.IS_OUT_OF_PRINT;
+                        mProductionInfo = BookEntry.IS_OUT_OF_PRINT;
                     } else {
-                        mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
+                        mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
                     }
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mOutOfPrintInfo = BookEntry.CHECK_OUT_OF_PRINT;
+                mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
             }
         });
     }
@@ -122,7 +122,7 @@ public class AddBookActivity extends AppCompatActivity {
         double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
         int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
         String supplierName = mEditSupplierName.getText().toString().trim();
-        long supplierPhoneNumber = Integer.parseInt(mEditSupplierPhoneNumber.getText().toString().trim());
+        long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
@@ -133,7 +133,7 @@ public class AddBookActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
         values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity);
-        values.put(BookEntry.COLUMN_BOOK_OUT_OF_PRINT, mOutOfPrintInfo);
+        values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
 
