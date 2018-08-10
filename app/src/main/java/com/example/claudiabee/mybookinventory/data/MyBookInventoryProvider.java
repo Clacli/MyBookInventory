@@ -19,18 +19,25 @@ import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookE
  */
 public class MyBookInventoryProvider extends ContentProvider {
 
-    /** Tag for the log message */
+    /**
+     * Tag for the log message
+     */
     public static final String LOG_TAG = MyBookInventoryProvider.class.getSimpleName();
 
-    /** URI matcher code for the content URI for the books table */
+    /**
+     * URI matcher code for the content URI for the books table
+     */
     private static final int BOOKS = 100;
 
-    /** URI matcher code of the content URI for a single book in the books table */
+    /**
+     * URI matcher code of the content URI for a single book in the books table
+     */
     private static final int BOOK_ID = 101;
 
-    /** UriMatcher object matches a content URI to a corresponding code.
-     *  The input passed into the constructor represent the code to return for the root URI.
-     *  It's common to use NO_MATCH as the input for this case.
+    /**
+     * UriMatcher object matches a content URI to a corresponding code.
+     * The input passed into the constructor represent the code to return for the root URI.
+     * It's common to use NO_MATCH as the input for this case.
      */
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -41,7 +48,9 @@ public class MyBookInventoryProvider extends ContentProvider {
         sUriMatcher.addURI(MyBookInventoryContract.CONTENT_AUTHORITY, MyBookInventoryContract.PATH_BOOKS + "/#", BOOK_ID);
     }
 
-    /** Database helper object */
+    /**
+     * Database helper object
+     */
     private MyBookInventoryDbHelper myBookInventoryDbHelper;
 
     /**
@@ -80,14 +89,14 @@ public class MyBookInventoryProvider extends ContentProvider {
         // decide whether to query the table or a single row
         switch (match) {
             case BOOKS:
-                // Perform a query on the PETS table
+                // Perform a query on the BOOKS table
                 cursor = bookshopDb.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case BOOK_ID:
                 // Selection and selectionArgs point to a specific row
                 selection = BookEntry._ID + "=?";
-                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 // Perform a query on the books table for a specific row.
                 cursor = bookshopDb.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
@@ -101,11 +110,11 @@ public class MyBookInventoryProvider extends ContentProvider {
     }
 
     /**
-     * @param    uri uri is the given URI which specify the data we want to interact with
-     * @return   the MIME type of data for the content URI which should start with
-     *           vnd.android.cursor.item for a single record, or
-     *           vnd.android.cursor.dir/ for multiple items or
-     *           null if there is no type..
+     * @param uri uri is the given URI which specify the data we want to interact with
+     * @return the MIME type of data for the content URI which should start with
+     * vnd.android.cursor.item for a single record, or
+     * vnd.android.cursor.dir/ for multiple items or
+     * null if there is no type..
      */
     @Nullable
     @Override
@@ -116,9 +125,9 @@ public class MyBookInventoryProvider extends ContentProvider {
     /**
      * Insert new data into the provider with the given ContentValues.
      *
-     * @param   uri    is what specifies the resources we want to interact with.
-     * @param   values are the values to insert into the database
-     * @return  uri is the uri which specifies the location of the inserted resource.
+     * @param uri    is what specifies the resources we want to interact with.
+     * @param values are the values to insert into the database
+     * @return uri is the uri which specifies the location of the inserted resource.
      */
     @Nullable
     @Override
@@ -127,7 +136,7 @@ public class MyBookInventoryProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         // Only the BOOKS case is supported for insertion,
         // any other case falls in the default case throwing an exception..
-        switch (match){
+        switch (match) {
             case BOOKS:
                 return insertBook(uri, values);
             default:
@@ -136,7 +145,7 @@ public class MyBookInventoryProvider extends ContentProvider {
     }
 
     /**
-     * Insert a pet into the database with the given content values. Return the new content URI
+     * Insert a book into the database with the given content values. Return the new content URI
      * for that specific row in the database.
      */
     private Uri insertBook(Uri uri, ContentValues values) {
@@ -150,12 +159,12 @@ public class MyBookInventoryProvider extends ContentProvider {
         // Check that the price of the book is not null and its value is equal to 0 or a
         // positive number.
         Double bookPrice = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
-        if ((bookPrice == null) || (bookPrice < 0))  {
+        if ((bookPrice == null) || (bookPrice < 0)) {
             throw new IllegalArgumentException("Valid price required");
         }
 
         // Check that the quantity is not null and its value is equal to 0 or a positive number
-        Integer bookQuantity = values.getAsInteger(BookEntry.COLUMN_BOOK_PRICE);
+        Integer bookQuantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
         if ((bookQuantity == null) || (bookQuantity < 0)) {
             throw new IllegalArgumentException("Valid price required");
         }
@@ -220,6 +229,97 @@ public class MyBookInventoryProvider extends ContentProvider {
      */
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        // Check if there is a match with the given uri
+        final int match = sUriMatcher.match(uri);
+        // Both the BOOKS case and the BOOK_ID are supported for insertion
+        switch (match) {
+            case BOOKS:
+                // Updete multiple rows according to the selection and selection args
+                return updateBook(uri, values, selection, selectionArgs);
+            case BOOK_ID:
+                // Update just one row the ID of which is contained in selectionArgs.
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateBook(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+    }
+
+    /**
+     * Update book records in the database with the given content values.
+     * Apply the changes to the rows specified in the selection and selection arguments.
+     * Return the number of rows successfully updated.
+     */
+    private int updateBook(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        // If there are no values to update don't try to update the database
+        if (values.size() == 0) {
+            return 0;
+        }
+
+        // If the {@link BookEntry#COLUMN_BOOK_TITLE} key is present,
+        // check that the name value is not null.
+        if (values.containsKey(BookEntry.COLUMN_BOOK_TITLE)) {
+            String bookTitle = values.getAsString(BookEntry.COLUMN_BOOK_TITLE);
+            if (bookTitle == null) {
+                throw new IllegalArgumentException("The title of the book is a required field.");
+            }
+        }
+
+        // If the {@link BookEntry#COLUMN_BOOK_PRICE} key is present,
+        // check that the price of the book is not null and its value is equal to 0 or a
+        // positive number.
+        if (values.containsKey(BookEntry.COLUMN_BOOK_PRICE)) {
+            Double bookPrice = values.getAsDouble(BookEntry.COLUMN_BOOK_PRICE);
+            if ((bookPrice == null) || (bookPrice < 0)) {
+                throw new IllegalArgumentException("Valid price required");
+            }
+        }
+
+        // If the {@link BookEntry#COLUMN_BOOK_QUANTITY} key is present,
+        // check that the quantity is not null and its value is equal to 0 or a positive number
+        if (values.containsKey(BookEntry.COLUMN_BOOK_QUANTITY)) {
+            Integer bookQuantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
+            if ((bookQuantity == null) || (bookQuantity < 0)) {
+                throw new IllegalArgumentException("Valid price required");
+            }
+        }
+
+
+        // If the {@link BookEntry#COLUMN_BOOK_PRODUCTION_INFO} key is present,
+        // check that the information on whether the book is out of print or not is equal to
+        // {@link #CHECK_IF_OUT_OF_PRINT}, {@link #NOT_OUT_OF_PRINT} or {@link #IS_OUT_OF_PRINT}.
+        if (values.containsKey(BookEntry.COLUMN_BOOK_PRODUCTION_INFO)) {
+            Integer production_info = values.getAsInteger(BookEntry.COLUMN_BOOK_PRODUCTION_INFO);
+            if (production_info == null || !BookEntry.isValidInfo(production_info)) {
+                throw new IllegalArgumentException("A valid information on whether the book is out of print or not is required");
+            }
+        }
+
+        // If the {@link BookEntry#COLUMN_BOOK_SUPPLIER_NAME} key is present,
+        // check that the name of the supplier of books is not null
+        if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_NAME)) {
+            String supplierName = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
+            if (TextUtils.isEmpty(supplierName)) {
+                throw new IllegalArgumentException("The supplier\'s name is required");
+            }
+        }
+
+        // If the {@link BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER} key is present,
+        // check that the phone number is not null and its value is equal to 0 or a positive number
+        if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER)) {
+            Long supplierPhoneNumber = values.getAsLong(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER);
+            if ((supplierPhoneNumber == null) || (supplierPhoneNumber < 0)) {
+                throw new IllegalArgumentException("A valid supplier's phone number is required");
+            }
+        }
+
+        // Access the database in write mode.
+        SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
+
+        // Update the new book record with the given values
+        return bookshopDb.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
     }
 }
