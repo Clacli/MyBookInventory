@@ -48,15 +48,16 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+
         // Find views to populate in inflated view
         TextView bookTitleTextView = (TextView) view.findViewById(R.id.product_name_textview);
         TextView bookPriceTextView = (TextView) view.findViewById(R.id.price_textview);
-        TextView bookQuantityTextView = (TextView) view.findViewById(R.id.quantity_textview);
+        TextView bookQuantityTextView = (TextView) view.findViewById(R.id.quantity_textview); // make global
 
         // Extract properties from cursor
         String bookTitle = cursor.getString(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE));
         Double bookPrice = cursor.getDouble(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE));
-        int bookQuantity = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY));
+        int bookQuantity = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY)); // make global
 
         // Populate textviews with data extracted
         bookTitleTextView.setText(bookTitle);

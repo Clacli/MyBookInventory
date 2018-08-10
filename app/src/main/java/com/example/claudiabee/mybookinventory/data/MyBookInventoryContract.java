@@ -91,7 +91,7 @@ public final class MyBookInventoryContract {
         /**
          * The phone number of the supplier of books
          * <p>
-         * Type: TEXT
+         * Type: INTEGER
          */
         public static final String COLUMN_BOOK_SUPPLIER_PHONE_NUMBER = "supplier_phone_number";
 

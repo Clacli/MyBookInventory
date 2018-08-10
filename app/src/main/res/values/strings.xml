@@ -63,4 +63,13 @@
     <!-- Text for the error message while saving book [CHAR LIMIT=50] -->
     <string name="insert_error_text">Error while saving book</string>
 
+    <!-- The text displayed on the button [CHAR LIMIT=15] -->
+    <string name="sale">Sale</string>
+
+    <!-- The label of the price section [CHAR LIMIT=15] -->
+    <string name="price">Price:</string>
+
+    <!-- The label of the quantity section [CHAR LIMIT=15] -->
+    <string name="quantity">Quantity:</string>
+
 </resources>

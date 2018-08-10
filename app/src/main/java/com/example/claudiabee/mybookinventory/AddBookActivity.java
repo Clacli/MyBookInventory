@@ -122,7 +122,7 @@ public class AddBookActivity extends AppCompatActivity {
         double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
         int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
         String supplierName = mEditSupplierName.getText().toString().trim();
-        String supplierPhoneNumber = mEditSupplierPhoneNumber.getText().toString().trim();
+        long supplierPhoneNumber = Integer.parseInt(mEditSupplierPhoneNumber.getText().toString().trim());
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();

@@ -88,7 +88,7 @@ public class BookListActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, 1);
         values.put(BookEntry.COLUMN_BOOK_OUT_OF_PRINT, BookEntry.IS_OUT_OF_PRINT);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, "OldBooksSupplier");
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, "2025550122");
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, 2025550122);
 
         // Inserting data, insert a new row for the sample book into the provider
         // using the ContentResolver.
@@ -105,10 +105,8 @@ public class BookListActivity extends AppCompatActivity {
     }
 
     /**
-     * Query the database to retrieve the product name (book title), the price,
-     * whether it is out of print or not.
-     * At the end of thr reading close the cursor to releases all its resources
-     * and makes it invalid.
+     * Query the database with to retrieve the product name (book title), the price,
+     * and the quantity.
      */
     private void queryBookData(){
 
