@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/book_label"
+        android:id="@+id/book_label_add_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/book_label_text_view_side_margin"
@@ -22,26 +22,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edit_book_title"
+        android:id="@+id/add_book_title"
         style="@style/EditTextStyle1"
         android:layout_marginTop="@dimen/title_edit_text_margin_top"
         android:hint="@string/title_hint"
         android:inputType="textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_label" />
+        app:layout_constraintTop_toBottomOf="@+id/book_label_add_layout" />
 
     <EditText
-        android:id="@+id/edit_book_price"
+        android:id="@+id/add_book_price"
         style="@style/EditTextStyle2"
         android:layout_marginLeft="@dimen/book_edit_text_margin"
         android:layout_marginStart="@dimen/book_edit_text_margin"
         android:layout_marginTop="@dimen/book_edit_text_margin"
         android:hint="@string/price_hint"
         android:inputType="numberDecimal"
-        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"
+        app:layout_constraintBaseline_toBaselineOf="@id/add_book_quantity"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_book_title" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_title" />
 
     <TextView
         android:id="@+id/currency"
@@ -50,12 +50,12 @@
         android:layout_marginBottom="@dimen/currency_text_view_margin_bottom"
         android:text="@string/currency_symbol"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBaseline_toBaselineOf="@id/edit_book_quantity"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_book_price"
-        app:layout_constraintStart_toEndOf="@+id/edit_book_price" />
+        app:layout_constraintBaseline_toBaselineOf="@id/add_book_quantity"
+        app:layout_constraintBottom_toBottomOf="@+id/add_book_price"
+        app:layout_constraintStart_toEndOf="@+id/add_book_price" />
 
     <EditText
-        android:id="@+id/edit_book_quantity"
+        android:id="@+id/add_book_quantity"
         style="@style/EditTextStyle2"
         android:layout_marginEnd="@dimen/quantity_edit_text_side_margin"
         android:layout_marginRight="@dimen/quantity_edit_text_side_margin"
@@ -63,7 +63,7 @@
         android:hint="@string/quantity_hint"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_book_title" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_title" />
 
     <TextView
         android:id="@+id/out_of_print_label"
@@ -76,13 +76,13 @@
         android:layout_marginStart="@dimen/out_of_print_side_margin"
         android:text="@string/out_of_print_label"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/info_on_book_production_spinner"
-        app:layout_constraintEnd_toEndOf="@+id/book_label"
+        app:layout_constraintBottom_toBottomOf="@+id/add_info_on_book_production_spinner"
+        app:layout_constraintEnd_toEndOf="@+id/book_label_add_layout"
         app:layout_constraintStart_toEndOf="@+id/currency" />
 
     <!-- Out of print drop-down spinner -->
     <Spinner
-        android:id="@+id/info_on_book_production_spinner"
+        android:id="@+id/add_info_on_book_production_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/spinner_height"
         android:layout_marginBottom="@dimen/spinner_margin_bottom"
@@ -92,9 +92,9 @@
         android:paddingEnd="@dimen/spinner_side_padding"
         android:paddingRight="@dimen/spinner_side_padding"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/edit_supplier_name"
+        app:layout_constraintBottom_toTopOf="@+id/add_supplier_name"
         app:layout_constraintStart_toEndOf="@+id/out_of_print_label"
-        app:layout_constraintTop_toTopOf="@+id/edit_book_quantity" />
+        app:layout_constraintTop_toTopOf="@+id/add_book_quantity" />
 
     <TextView
         android:id="@+id/supplier_label"
@@ -105,21 +105,21 @@
         android:layout_marginStart="@dimen/supplier_label_margin"
         android:text="@string/supplier_label"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toTopOf="@+id/edit_supplier_name"
+        app:layout_constraintBottom_toTopOf="@+id/add_supplier_name"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/edit_supplier_name"
+        android:id="@+id/add_supplier_name"
         style="@style/EditTextStyle1"
         android:layout_marginBottom="@dimen/supplier_name_edittext_margin_bottom"
         android:hint="@string/supplier_name_hint"
         android:inputType="textCapWords"
-        app:layout_constraintBottom_toTopOf="@+id/edit_supplier_phone_number"
+        app:layout_constraintBottom_toTopOf="@+id/add_supplier_phone_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/edit_supplier_phone_number"
+        android:id="@+id/add_supplier_phone_number"
         style="@style/EditTextStyle1"
         android:layout_marginBottom="@dimen/phone_number_edittext_margin_bottom"
         android:hint="@string/supplier_phone_number_hint"
@@ -131,7 +131,7 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
         style="@style/FabStyle"
-        app:layout_constraintBottom_toTopOf="@+id/edit_book_title"
+        app:layout_constraintBottom_toTopOf="@+id/add_book_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="16dp"/>

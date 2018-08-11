@@ -51,15 +51,15 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_edit);
+        setContentView(R.layout.activity_add_book);
 
         // Instantiate the EditText that we will need to read user input from
-        mEditBookTitle = (EditText) findViewById(R.id.edit_book_title);
-        mEditBookPrice = (EditText) findViewById(R.id.edit_book_price);
-        mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
-        mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
-        mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
-        mProductionInfoPrintSpinner = (Spinner) findViewById(R.id.info_on_book_production_spinner);
+        mEditBookTitle = (EditText) findViewById(R.id.add_book_title);
+        mEditBookPrice = (EditText) findViewById(R.id.add_book_price);
+        mEditBookQuantity = (EditText) findViewById(R.id.add_book_quantity);
+        mEditSupplierName = (EditText) findViewById(R.id.add_supplier_name);
+        mEditSupplierPhoneNumber = (EditText) findViewById(R.id.add_supplier_phone_number);
+        mProductionInfoPrintSpinner = (Spinner) findViewById(R.id.add_info_on_book_production_spinner);
 
         // Find the Fab with ID == fab and set an action upon it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
