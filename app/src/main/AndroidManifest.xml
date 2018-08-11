@@ -22,16 +22,28 @@
             android:name=".AddBookActivity"
             android:label="@string/add_a_book_label"
             android:parentActivityName=".BookListActivity">
+
             <!-- Parent activity meta-data to support 4.0 version and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BookListActivity"/>
+                android:value=".BookListActivity" />
         </activity>
 
         <provider
             android:name=".data.MyBookInventoryProvider"
             android:authorities="com.example.claudiabee.mybookinventory"
-            android:exported="false"/>
+            android:exported="false" />
 
+        <activity
+            android:name=".EditBookActivity"
+            android:label="@string/edit_a_book_label"
+            android:parentActivityName=".BookListActivity">
+
+            <!-- Parent activity meta-data to support 4.0 version and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BookListActivity" />
+        </activity>
     </application>
+
 </manifest>

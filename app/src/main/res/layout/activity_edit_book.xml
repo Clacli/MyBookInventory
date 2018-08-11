@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/book_label2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/book_label"
+            android:textSize="@dimen/book_label_text_size" />
+
+        <EditText
+            android:id="@+id/edit_book_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_hint"
+            android:inputType="textCapWords" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_book_price2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/price_hint"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/currency2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/currency_symbol"
+                android:textSize="@dimen/text_size" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_book_quantity2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/quantity_hint"
+            android:inputType="number" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/out_of_print_label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/out_of_print_label"
+                android:textSize="@dimen/text_size" />
+
+            <!-- Out of print drop-down spinner -->
+            <Spinner
+                android:id="@+id/info_on_book_production_spinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spinner_height"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/supplier_label2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/supplier_label"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/edit_supplier_name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/supplier_name_hint"
+            android:inputType="textCapWords" />
+
+        <EditText
+            android:id="@+id/edit_supplier_phone_number2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/supplier_phone_number_hint"
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab3"
+        style="@style/FabStyle"
+        android:layout_gravity="end" />
+
+</RelativeLayout>

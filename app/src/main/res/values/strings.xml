@@ -71,5 +71,6 @@
 
     <!-- The label of the quantity section [CHAR LIMIT=15] -->
     <string name="quantity">Quantity:</string>
+    <string name="edit_a_book_label">Edit a Book</string>
 
 </resources>
