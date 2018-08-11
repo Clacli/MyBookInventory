@@ -63,5 +63,7 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
         bookTitleTextView.setText(bookTitle);
         bookPriceTextView.setText(String.valueOf(bookPrice));
         bookQuantityTextView.setText(String.valueOf(bookQuantity));
+
+
     }
 }

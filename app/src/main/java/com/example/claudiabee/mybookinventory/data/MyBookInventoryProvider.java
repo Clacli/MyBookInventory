@@ -107,6 +107,11 @@ public class MyBookInventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI" + uri);
         }
+
+        // Set the notification URI on the cursor. When the data at the given URI changes
+        // the Cursor must be updated
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return cursor;
     }
 
@@ -210,8 +215,14 @@ public class MyBookInventoryProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
+
+        // Notify all the listener that the data has changed for the book URI,
+        // the methods takes as argument the URI and  passing null to the second
+        // argument the adapter object gets notified.
+        getContext().getContentResolver().notifyChange(uri, null);
+
         // Append new row ID to CONTENT_URI and return the new URI of the last inserted record
-        return ContentUris.withAppendedId(BookEntry.CONTENT_URI, newRowId);
+        return ContentUris.withAppendedId(uri, newRowId);
     }
 
     /**
@@ -224,6 +235,9 @@ public class MyBookInventoryProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        // Number of rows deleted
+        int numberOfRowsDeleted;
+
         // Get an instance of the SQLite database in write mode
         SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
 
@@ -234,14 +248,25 @@ public class MyBookInventoryProvider extends ContentProvider {
         switch (match) {
             case BOOKS:
                 // Delete multiple rows according to the selection and selectionArgs
-                return bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                numberOfRowsDeleted = bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             case BOOK_ID:
                 selection = BookEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                numberOfRowsDeleted = bookshopDb.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
+
+        // Check if one or more rows were deleted
+        if (numberOfRowsDeleted != 0) {
+            // Notify all listener that one or more rows were deleted for the given uri
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        // Return the number of rows deleted
+        return numberOfRowsDeleted;
     }
 
     /**
@@ -348,6 +373,13 @@ public class MyBookInventoryProvider extends ContentProvider {
         SQLiteDatabase bookshopDb = myBookInventoryDbHelper.getWritableDatabase();
 
         // Update the new book record with the given values
-        return bookshopDb.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
+        int numberOfRowsUpdated = bookshopDb.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        // Check if there are one or more rows updated and in this case notify all listener
+        // that data at the given URI were changed
+        if (numberOfRowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return numberOfRowsUpdated;
     }
 }
