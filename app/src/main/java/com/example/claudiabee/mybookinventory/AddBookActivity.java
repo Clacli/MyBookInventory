@@ -39,7 +39,7 @@ public class AddBookActivity extends AppCompatActivity {
     private EditText mEditSupplierPhoneNumber;
 
     /** Spinner from which to chose the option about the book being out of print or not */
-    private Spinner mProductionInfoPrintSpinner;
+    private Spinner mProductionInfoSpinner;
 
     /**
      * Info whether the book is out of print or not. The possible valid values are:
@@ -59,7 +59,7 @@ public class AddBookActivity extends AppCompatActivity {
         mEditBookQuantity = (EditText) findViewById(R.id.add_book_quantity);
         mEditSupplierName = (EditText) findViewById(R.id.add_supplier_name);
         mEditSupplierPhoneNumber = (EditText) findViewById(R.id.add_supplier_phone_number);
-        mProductionInfoPrintSpinner = (Spinner) findViewById(R.id.add_info_on_book_production_spinner);
+        mProductionInfoSpinner = (Spinner) findViewById(R.id.add_info_on_book_production_spinner);
 
         // Find the Fab with ID == fab and set an action upon it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
@@ -81,16 +81,17 @@ public class AddBookActivity extends AppCompatActivity {
     private void setupSpinner() {
         // Create the adapter for the spinner. The list options from which the user choose,
         // are stored in the String array in arrays.xml, the spinner will use the default layout
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter infoAdapter =
+                ArrayAdapter.createFromResource(this,
                 R.array.array_production_info_options, android.R.layout.simple_spinner_item);
 
         // Specify the layout style to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        mProductionInfoPrintSpinner.setAdapter(adapter);
+        infoAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        // Apply the infoAdapter to the spinner
+        mProductionInfoSpinner.setAdapter(infoAdapter);
 
         // Set the integer selected to the constant values
-        mProductionInfoPrintSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mProductionInfoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);

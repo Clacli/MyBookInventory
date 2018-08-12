@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -24,6 +28,8 @@ public class EditBookActivity extends AppCompatActivity
     // This String constant represent the loader ID
     private static final int BOOK_URI_LOADER = 0;
 
+    // String[] LOADER_PROJECTION represent the columns of the table
+    // to be passed into the onCreateLoader methods
     private static final String[] LOADER_PROJECTION = {
             BookEntry._ID,
             BookEntry.COLUMN_BOOK_TITLE,
@@ -55,7 +61,7 @@ public class EditBookActivity extends AppCompatActivity
     private EditText mEditSupplierPhoneNumber;
 
     /** Spinner from which to chose the option about the book being out of print or not */
-    private Spinner mProductionInfoPrintSpinner;
+    private Spinner mProductionInfoSpinner;
 
     /**
      * Info whether the book is out of print or not. The possible valid values are:
@@ -72,7 +78,7 @@ public class EditBookActivity extends AppCompatActivity
 
         // Return the Intent that started this activity in edit mode using the getIntent()
         Intent intent = getIntent();
-        // Get the URI passed by the intent
+        // Get the URI passed by the intent from the BookDetailActivity
         mBookUri = intent.getData();
 
         if (mBookUri != null) {
@@ -87,10 +93,51 @@ public class EditBookActivity extends AppCompatActivity
         mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
         mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
         mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
-        mProductionInfoPrintSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
+        mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
 
+        // Setup spinner
+        setupSpinner();
+    }
 
+    /**
+     * Setup the dropdown spinner that allows the user to select the information whether the book is
+     * out of print or not or if this information must be checked
+     */
+    private void setupSpinner(){
+        // Create an adapter for the spinner. The list options from which the user choose,
+        // are stored in the String array in arrays.xml, the spinner will use the default layout
+        ArrayAdapter infoAdapter = ArrayAdapter.createFromResource(
+                this, R.array.array_production_info_options, android.R.layout.simple_spinner_item);
 
+        // Specify the layout style to use when the list of choices appears
+        infoAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        // Apply the infoAdapter to the spinner
+        mProductionInfoSpinner.setAdapter(infoAdapter);
+
+        //Set the integer selected to the constant values
+        mProductionInfoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (TextUtils.isEmpty(selection)) {
+                    if (TextUtils.isEmpty(selection)) {
+                        if (selection.equals(getString(R.string.not_out_of_print))) {
+                            mProductionInfo = BookEntry.NOT_OUT_OF_PRINT;
+                        } else if (selection.equals(getString(R.string.yes_out_of_print))){
+                            mProductionInfo = BookEntry.IS_OUT_OF_PRINT;
+                        } else  {
+                            mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
+            }
+        });
     }
 
     @NonNull
@@ -147,13 +194,13 @@ public class EditBookActivity extends AppCompatActivity
             // by the cursor
             switch(productionInfo) {
                 case BookEntry.NOT_OUT_OF_PRINT:
-                    mProductionInfoPrintSpinner.setSelection(1);
+                    mProductionInfoSpinner.setSelection(1);
                     break;
                 case BookEntry.IS_OUT_OF_PRINT:
-                    mProductionInfoPrintSpinner.setSelection(2);
+                    mProductionInfoSpinner.setSelection(2);
                     break;
                 default:
-                    mProductionInfoPrintSpinner.setSelection(0);
+                    mProductionInfoSpinner.setSelection(0);
                     break;
             }
         }
@@ -167,6 +214,6 @@ public class EditBookActivity extends AppCompatActivity
         mEditBookQuantity.setText("");
         mEditSupplierName.setText("");
         mEditSupplierPhoneNumber.setText("");
-        mProductionInfoPrintSpinner.setSelection(0); // Select "Check" option
+        mProductionInfoSpinner.setSelection(0); // Select "Check" option
     }
 }
