@@ -92,11 +92,9 @@
     <string name="detail_out_of_print_text">Out of print:</string>
 
     <!-- The text of the book not updated message [CHAR LIMIT=NONE] -->
-    <string name="no_update_message">The book was not updated</string>
+    <string name="error_update_message">Error in updating</string>
 
     <!-- The text of the book updated successfully message  [CHAR LIMIT=NONE] -->
     <string name="successful_update_message">The book was successfully updated</string>
-    <string name="no_input_entered_message">No input was entered by the user</string>
-
 
 </resources>
