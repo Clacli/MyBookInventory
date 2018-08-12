@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,7 +22,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
-import com.example.claudiabee.mybookinventory.data.MyBookInventoryDbHelper;
 
 /**
  * Displays a list of books stored in a database
@@ -32,7 +32,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
     public final static String LOG_TAG = BookListActivity.class.getSimpleName();
 
     /**  This constant is the loader ID, it identifies the loader */
-    public static final int URI_LOADER = 0;
+    public static final int BOOK_URI_LOADER = 0;
 
     // This is the projection, the rows of the books table that will be retrieved
     String[] LOADER_PROJECTION = {
@@ -71,8 +71,26 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
         // Set the CursorAdapter on the listView
         mBookListView.setAdapter(mBookCursorAdapter);
 
+        // Set onClickItemListener on the ListView so that when a list item gets clicked
+        // an intent is sent to open the edit/detail activity
+        mBookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(LOG_TAG, "This list item view has been clicked");
+                Intent intent = new Intent (BookListActivity.this, BookDetailActivity.class);
+                // Find the URI the selected list item
+                Uri currentUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
+
+                // Pass the data of the selected book to the new activity
+                intent.setData(currentUri);
+
+                // Launch the {@link BookDetailActivity} to display the data for the current book.
+                startActivity(intent);
+            }
+        });
+
         // Prepare the loader. Either reconnect with an existing one, or start a new one.
-        getSupportLoaderManager().initLoader(URI_LOADER, null, this);
+        getSupportLoaderManager().initLoader(BOOK_URI_LOADER, null, this);
 
         /**
          * When this Fab gets clicked an intent is sent to start the AddBookActivity
