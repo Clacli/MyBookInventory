@@ -9,11 +9,18 @@
     <!-- Label for overflow menu option that deletes all book records in the db [CHAR LIMIT=20] -->
     <string name="action_delete_all_data">Delete All Books</string>
 
-    <!-- Label for the AddBookActivity [CHAR LIMIT=10] -->
-    <string name="add_a_book_label">Add a Book</string>
 
     <!-- Label for the BookListActivity [CHAR LIMIT=20] -->
     <string name="book_activity_label">Book Inventory</string>
+
+    <!-- Label for the AddBookActivity [CHAR LIMIT=20] -->
+    <string name="add_a_book_label">Add a Book</string>
+
+    <!-- Label for the BookDetailActivity [CHAR LIMIT=20] -->
+    <string name="book_detail_label">Book Detail</string>
+
+    <!-- Label for the EditBookActivity [CHAR LIMIT=20] -->
+    <string name="edit_a_book_label">Edit a Book</string>
 
     <!-- Label for the book edit screen [CHAR LIMIT=20] -->
     <string name="book_label">Book</string>
@@ -71,6 +78,13 @@
 
     <!-- The label of the quantity section [CHAR LIMIT=15] -->
     <string name="quantity">Quantity:</string>
-    <string name="edit_a_book_label">Edit a Book</string>
+
+
+
+    <string name="delete_button">Delete</string>
+    <string name="edit_button">Edit</string>
+    <string name="order_button">Order</string>
+    <string name="detail_out_of_print_text">Out of print:</string>
+
 
 </resources>

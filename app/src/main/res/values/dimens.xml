@@ -19,7 +19,7 @@
     <dimen name="currency_text_view_margin_bottom">5dp</dimen>
     <dimen name="book_edit_text_margin">16dp</dimen>
     <dimen name="title_edit_text_margin_top">30dp</dimen>
-    <dimen name="book_label_text_size">22sp</dimen>
+    <dimen name="book_title_text_size">22sp</dimen>
     <dimen name="book_label_text_view_margin_top">41dp</dimen>
     <dimen name="book_label_text_view_side_margin">8dp</dimen>
     <dimen name="root_view_padding">16dp</dimen>

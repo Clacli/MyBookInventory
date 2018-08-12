@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/land_book_label_textview_side_margin"
         android:layout_marginTop="@dimen/land_book_label_textview_margin_top"
         android:text="@string/book_label"
-        android:textSize="@dimen/book_label_text_size"
+        android:textSize="@dimen/book_title_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
