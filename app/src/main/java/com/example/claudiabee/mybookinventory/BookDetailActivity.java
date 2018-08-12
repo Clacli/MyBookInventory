@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
@@ -35,7 +37,7 @@ public class BookDetailActivity extends AppCompatActivity
     };
 
 
-    // The URI referring to the pet stored in the database of which we want to
+    // The URI referring to the book stored in the database of which we want to
     // see the detail
     private Uri mBookUri;
 
@@ -76,7 +78,6 @@ public class BookDetailActivity extends AppCompatActivity
 
         // Return the Intent that started this activity in edit mode using the getIntent()
         Intent intent = getIntent();
-
         // Get the URI passed by the intent
         mBookUri = intent.getData();
 
@@ -84,7 +85,6 @@ public class BookDetailActivity extends AppCompatActivity
             // Prepare the loader. Either re-connect with an existing one,
             // or start a new one.
             getSupportLoaderManager().initLoader(BOOK_URI_LOADER, null, this);
-
         }
 
         // Find all relevant views that we will need to read user input from
@@ -94,6 +94,20 @@ public class BookDetailActivity extends AppCompatActivity
         mInfoOnProduction = (TextView) findViewById(R.id.detail_info_on_book_production);
         mSupplierNameTextView = (TextView) findViewById(R.id.detail_supplier_name);
         mSupplierPhoneNumberTextView = (TextView) findViewById(R.id.detail_supplier_phone_number);
+
+        // Set onClickListener on the editButton so that when the button gets clicked
+        // an intent is sent to open the EditBookActivity
+        Button editButton = (Button) findViewById(R.id.edit_book_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookDetailActivity.this, EditBookActivity.class);
+                // Pass the data of the selected book to the new activity
+                intent.setData(mBookUri);
+                // Launch the {@link EditBookActivity} to edit the data for the current book.
+                startActivity(intent);
+            }
+        });
     }
 
     // Creates the CursorLoader and defines the data to query from the content provider

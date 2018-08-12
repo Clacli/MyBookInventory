@@ -18,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
@@ -33,6 +35,11 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 
     /**  This constant is the loader ID, it identifies the loader */
     public static final int BOOK_URI_LOADER = 0;
+
+    /**
+     * This is the current uri
+     */
+    private Uri currentUri;
 
     // This is the projection, the rows of the books table that will be retrieved
     String[] LOADER_PROJECTION = {
@@ -72,18 +79,16 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
         mBookListView.setAdapter(mBookCursorAdapter);
 
         // Set onClickItemListener on the ListView so that when a list item gets clicked
-        // an intent is sent to open the edit/detail activity
+        // an intent is sent to open the BookDetailActivity
         mBookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(LOG_TAG, "This list item view has been clicked");
                 Intent intent = new Intent (BookListActivity.this, BookDetailActivity.class);
                 // Find the URI the selected list item
-                Uri currentUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
-
+                currentUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
                 // Pass the data of the selected book to the new activity
                 intent.setData(currentUri);
-
                 // Launch the {@link BookDetailActivity} to display the data for the current book.
                 startActivity(intent);
             }
@@ -103,13 +108,29 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
                 startActivity(new Intent(BookListActivity.this, AddBookActivity.class));
             }
         });
-    }
 
-    // When the activity restarts the count of the rows updates.
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // queryBookData();
+
+        /*
+        Button saleButton = (Button) findViewById(R.id.sale_button);
+        saleButton.setOnClickListener(new View.OnClickListener() {
+
+            // Query current uri to get the quantity
+
+            // Perform subtracion
+            // Define content value
+            @Override
+            public void onClick(View v) {
+
+                TextView quantitytextView = (TextView) findViewById(R.id.quantity_textview);
+                int quantity = Integer.parseInt(quantitytextView.getText().toString().trim());
+                quantity--;
+
+                // Create a ContentValues object. It specifies what data we want to update
+                ContentValues values = new ContentValues();
+                values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
+                getContentResolver().update(currentUri, values, null, null);
+            }
+        });*/
     }
 
     /**
@@ -153,7 +174,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
     public boolean onOptionsItemSelected(MenuItem item) {
         // Insert sample data in database
         insertBook();
-        // queryBookData();
         return super.onOptionsItemSelected(item);
     }
 
