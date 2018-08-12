@@ -1,21 +1,23 @@
 package com.example.claudiabee.mybookinventory;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
@@ -97,6 +99,19 @@ public class EditBookActivity extends AppCompatActivity
 
         // Setup spinner
         setupSpinner();
+
+        // Create an instance of the FAB in the edit_book_layout
+        FloatingActionButton editFab = (FloatingActionButton) findViewById(R.id.edit_fab);
+        // Set an onClickListener on the fab
+        editFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // When the FAB gets clicked the book gets updated and the activity finishes going
+                // going back to the BookDetailActivity
+                updateBook();
+                finish();
+            }
+        });
     }
 
     /**
@@ -120,8 +135,6 @@ public class EditBookActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
-                if (TextUtils.isEmpty(selection)) {
-                    if (TextUtils.isEmpty(selection)) {
                         if (selection.equals(getString(R.string.not_out_of_print))) {
                             mProductionInfo = BookEntry.NOT_OUT_OF_PRINT;
                         } else if (selection.equals(getString(R.string.yes_out_of_print))){
@@ -130,14 +143,52 @@ public class EditBookActivity extends AppCompatActivity
                             mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
                         }
                     }
-                }
-            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
             }
         });
+    }
+
+    /**
+     * This method gets the user's input from the editor and update the information about books
+     */
+    private void updateBook() {
+        // Read from the input fields and get the values to be passed into the ContentValue Object
+        String bookTitle = mEditBookTitle.getText().toString().trim();
+        double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
+        int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+        String supplierName = mEditSupplierName.getText().toString().trim();
+        long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
+
+        // Create a ContentValues object. It specifies what data we want to insert
+        ContentValues values = new ContentValues();
+
+        // Populate the ContentValues object with
+        // key (column name) - values (obtained from the user input) and use it later
+        // to insert a new book into the books table of the database.
+        values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
+        values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity);
+        values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
+
+        // Update the book already existing in the database, returning the number of rows affected
+        // by the update
+        int updatedRowNumber = getContentResolver().update(
+                mBookUri, values, null, null);
+
+        // Show a toast message whether the book was updated or if the update was successful
+        if (updatedRowNumber == 0) {
+            // No rows were updated
+            Toast.makeText(getApplicationContext(), R.string.no_update_message, Toast.LENGTH_SHORT);
+        } else {
+            // The book was updated
+            Toast.makeText(getApplicationContext(), R.string.successful_update_message, Toast.LENGTH_SHORT);
+        }
+
     }
 
     @NonNull
