@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -162,6 +163,18 @@ public class EditBookActivity extends AppCompatActivity
         String supplierName = mEditSupplierName.getText().toString().trim();
         long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
 
+        // Check if all the fields in the editor are blank
+        if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(String.valueOf(bookPrice)) &&
+                TextUtils.isEmpty(String.valueOf(bookQuantity)) && (TextUtils.isEmpty(supplierName) &&
+                TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
+                mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
+            // Since no fields were modified, we can return early without updating a new pet.
+            // No need to create ContentValues and no need to do any ContentProvider operations.
+            Toast.makeText(this, R.string.no_input_entered_message,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
 
@@ -183,10 +196,11 @@ public class EditBookActivity extends AppCompatActivity
         // Show a toast message whether the book was updated or if the update was successful
         if (updatedRowNumber == 0) {
             // No rows were updated
-            Toast.makeText(getApplicationContext(), R.string.no_update_message, Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), R.string.no_update_message, Toast.LENGTH_SHORT).show();
         } else {
             // The book was updated
-            Toast.makeText(getApplicationContext(), R.string.successful_update_message, Toast.LENGTH_SHORT);
+            Toast.makeText(
+                    getApplicationContext(), R.string.successful_update_message, Toast.LENGTH_SHORT).show();
         }
 
     }

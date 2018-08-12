@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +15,14 @@ import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+import java.net.URI;
+
 /**
  * In this Activity the user can create a new book and store it in a database.
  */
 public class AddBookActivity extends AppCompatActivity {
+
+    private URI uri = null;
 
     /** This String constants is for logging */
     public static final String LOG_TAG = AddBookActivity.class.getSimpleName();
@@ -121,6 +126,18 @@ public class AddBookActivity extends AppCompatActivity {
         int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
         String supplierName = mEditSupplierName.getText().toString().trim();
         long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
+
+        // Check if all the fields in the editor are blank
+        if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(String.valueOf(bookPrice)) &&
+                TextUtils.isEmpty(String.valueOf(bookQuantity)) && (TextUtils.isEmpty(supplierName) &&
+                TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
+                mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
+            // Since no fields were modified, we can return early without creating a new pet.
+            // No need to create ContentValues and no need to do any ContentProvider operations.
+            Toast.makeText(this, R.string.no_input_entered_message,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
