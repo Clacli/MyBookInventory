@@ -8,24 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Style 1 for EditText -->
-    <style name="EditTextStyle1">
-        <item name="android:layout_width">@dimen/edit_text_1_layout_width</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/edit_text_1_side_margin</item>
-        <item name="android:layout_marginLeft">@dimen/edit_text_1_side_margin</item>
-        <item name="android:layout_marginRight">@dimen/edit_text_1_side_margin</item>
-        <item name="android:layout_marginStart">@dimen/edit_text_1_side_margin</item>
-        <item name="android:textSize">@dimen/text_size</item>
-    </style>
-
-    <!-- Style 2 for EditText -->
-    <style name="EditTextStyle2">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/text_size</item>
-    </style>
-
     <!-- Style  for Fab -->
     <style name="FabStyle">
         <item name="android:layout_width">wrap_content</item>
