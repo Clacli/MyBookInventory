@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,10 +23,7 @@ import java.net.URI;
 /**
  * In this Activity the user can create a new book and store it in a database.
  */
-public class AddBookActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    private URI uri = null;
+public class AddBookActivity extends AppCompatActivity {
 
     /** This String constants is for logging */
     public static final String LOG_TAG = AddBookActivity.class.getSimpleName();
@@ -125,22 +123,22 @@ public class AddBookActivity extends AppCompatActivity
 
         // Get the input entered by the user from the EditText
         String bookTitle = mEditBookTitle.getText().toString().trim();
-        double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
-        int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+        String bookPriceString = mEditBookPrice.getText().toString().trim();
+        String bookQuantityString = mEditBookQuantity.getText().toString().trim();
         String supplierName = mEditSupplierName.getText().toString().trim();
-        long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
+        String supplierPhoneNumberString = mEditSupplierPhoneNumber.getText().toString().trim();
 
-        // Check if all the fields in the editor are blank
-        /*if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(String.valueOf(bookPrice)) &&
-                TextUtils.isEmpty(String.valueOf(bookQuantity)) && (TextUtils.isEmpty(supplierName) &&
-                TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
+        //Check if all the fields in the editor are blank
+       if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(bookPriceString) &&
+                TextUtils.isEmpty(bookQuantityString) && (TextUtils.isEmpty(supplierName) &&
+                TextUtils.isEmpty(supplierPhoneNumberString) &&
                 mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
             // Since no fields were modified, we can return early without creating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
-            Toast.makeText(this, R.string.no_input_entered_message,
+            Toast.makeText(getApplicationContext(), "No new book saved",
                     Toast.LENGTH_SHORT).show();
             return;
-        }*/
+        }
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
@@ -149,10 +147,28 @@ public class AddBookActivity extends AppCompatActivity
         // key (column name) - values (obtained from the user input) and use it later
         // to insert a new book into the books table of the database.
         values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
+        // If the price of the book is not provided by the user, do not try to parse the String into
+        // an integer value. Use 0.0 by default.
+        double bookPrice = 0.0;
+        if (!TextUtils.isEmpty(bookPriceString)) {
+            bookPrice = Double.parseDouble(bookPriceString);
+        }
         values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
+        // If the quantity of books is not provided by the user, do not try to parse the String into
+        // an integer value. Use 0 by default.
+        int bookQuantity = 0;
+        if (!TextUtils.isEmpty(bookQuantityString)) {
+            bookQuantity = Integer.parseInt(bookQuantityString);
+        }
         values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity);
         values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
+        // If the phone number of the book provider is not provided by the user, do not try to
+        // parse the String into an integer value. Use 0 by default.
+        long supplierPhoneNumber = 0;
+        if (!TextUtils.isEmpty(supplierPhoneNumberString)) {
+            supplierPhoneNumber = Long.parseLong(supplierPhoneNumberString);
+        }
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
 
         // Insert ContentValues into the database and store the returned URI of the
@@ -166,20 +182,5 @@ public class AddBookActivity extends AppCompatActivity
         } else {
             Toast.makeText(this, R.string.successful_insert_text, Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

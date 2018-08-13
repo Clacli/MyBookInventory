@@ -228,19 +228,6 @@ public class EditBookActivity extends AppCompatActivity
         String supplierName = mEditSupplierName.getText().toString().trim();
         long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
 
-        /*// Check if all the fields in the editor are blank
-        if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(String.valueOf(bookPrice)) &&
-                TextUtils.isEmpty(String.valueOf(mBookQuantity)) && (TextUtils.isEmpty(supplierName) &&
-                TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
-                mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
-            // Since no fields were modified, we can return early without updating a new book.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-            Toast.makeText(this, R.string.no_input_entered_message,
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-
-
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
 
