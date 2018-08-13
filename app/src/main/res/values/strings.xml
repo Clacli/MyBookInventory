@@ -98,5 +98,7 @@
     <string name="successful_update_message">The book was successfully updated</string>
     <string name="minus_button">-</string>
     <string name="plus_button">+</string>
+    <string name="deletion_error_message">Error while deleting the book</string>
+    <string name="successful_deletion_message">Book successfully deleted</string>
 
 </resources>

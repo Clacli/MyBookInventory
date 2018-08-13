@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
@@ -114,6 +115,18 @@ public class BookDetailActivity extends AppCompatActivity
             }
         });
 
+        // Set onClickListener on the deleteButton so that when the button gets clicked
+        // the current record gets deleted, going back to the parent activity
+        Button deleteButton = (Button) findViewById(R.id.delete_book_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBook();
+                // Close the activity
+                finish();
+            }
+        });
+
         // Set onClickListener on the editButton so that when the button gets clicked
         // an intent is sent to open the phone to call the supplier's phone number
         Button orderButton = (Button) findViewById(R.id.order_button);
@@ -127,6 +140,31 @@ public class BookDetailActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    /**
+     * This method gets the user's input from the editor and update the information about books
+     */
+    private void deleteBook() {
+        // Only perform the delete if this is an existing book.
+        if (mBookUri != null) {
+            // Call the ContentResolver to delete the book at the given content URI.
+            // Pass in null for the selection and selection args because the mBookUri
+            // content URI already identifies the book that we want.
+            int rowDeleted = getContentResolver().delete(
+                    mBookUri,            // the current URI of the pet we want to remove from the database.
+                    null,       // the column to select on
+                    null); // the value to compare to
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowDeleted == 0) {
+                // if no row were deleted, then there was an error with the delete.
+                Toast.makeText(this, R.string.deletion_error_message, Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, R.string.successful_deletion_message, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     // Creates the CursorLoader and defines the data to query from the content provider
