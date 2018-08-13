@@ -96,5 +96,7 @@
 
     <!-- The text of the book updated successfully message  [CHAR LIMIT=NONE] -->
     <string name="successful_update_message">The book was successfully updated</string>
+    <string name="minus_button">-</string>
+    <string name="plus_button">+</string>
 
 </resources>

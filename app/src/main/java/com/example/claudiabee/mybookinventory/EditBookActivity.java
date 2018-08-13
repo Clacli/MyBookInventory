@@ -15,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
@@ -72,6 +74,20 @@ public class EditBookActivity extends AppCompatActivity
      */
     private int mProductionInfo = BookEntry.CHECK_IF_OUT_OF_PRINT;
 
+    /**
+     * Minus button increase the quantity of books
+     */
+    Button mMinusButton = (Button) findViewById(R.id.minus_button);
+
+    /**
+     * Plus button increase the quantity of books
+     */
+    Button mPlusButton = (Button) findViewById(R.id.plus_button);
+
+    /**
+     * TextView displaying the quantity of books passed from the BookDetailActivity
+     */
+    private TextView mBookQuantityTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +108,12 @@ public class EditBookActivity extends AppCompatActivity
         // Instantiate the EditText that we will need to read user input from
         mEditBookTitle = (EditText) findViewById(R.id.edit_book_title);
         mEditBookPrice = (EditText) findViewById(R.id.edit_book_price);
-        mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
+        mBookQuantityTextView = (TextView) findViewById(R.id.received_book_quantity);
         mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
         mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
         mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
 
+        mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
         // Setup spinner
         setupSpinner();
 
@@ -158,7 +175,7 @@ public class EditBookActivity extends AppCompatActivity
         // Read from the input fields and get the values to be passed into the ContentValue Object
         String bookTitle = mEditBookTitle.getText().toString().trim();
         double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
-        int bookQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+        int bookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString().trim());
         String supplierName = mEditSupplierName.getText().toString().trim();
         long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
 
@@ -173,6 +190,21 @@ public class EditBookActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return;
         }*/
+
+        /*int decreaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim()) ;
+
+        int increaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+
+
+        //Set onClickListener on minus button
+        mMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                retur
+            }
+        });*/
+
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
@@ -250,7 +282,7 @@ public class EditBookActivity extends AppCompatActivity
             // Update the views on the screen with the values from the database
             mEditBookTitle.setText(title);
             mEditBookPrice.setText(Double.toString(price));
-            mEditBookQuantity.setText(Integer.toString(quantity));
+            mBookQuantityTextView.setText(Integer.toString(quantity));
             mEditSupplierName.setText(supplierName);
             mEditSupplierPhoneNumber.setText(Long.toString(supplierPhoneNumber));
 
@@ -275,7 +307,7 @@ public class EditBookActivity extends AppCompatActivity
         // If the loader is invalidated, clear out all the data from the textviews.
         mEditBookTitle.setText("");
         mEditBookPrice.setText("");
-        mEditBookQuantity.setText("");
+        mBookQuantityTextView.setText("");
         mEditSupplierName.setText("");
         mEditSupplierPhoneNumber.setText("");
         mProductionInfoSpinner.setSelection(0); // Select "Check" option

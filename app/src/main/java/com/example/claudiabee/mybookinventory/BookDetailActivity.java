@@ -1,14 +1,14 @@
 package com.example.claudiabee.mybookinventory;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,6 +71,11 @@ public class BookDetailActivity extends AppCompatActivity
      */
     private TextView mSupplierPhoneNumberTextView;
 
+    /**
+     * Suppliers phone number
+     */
+    private long mSupplierPhoneNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +111,20 @@ public class BookDetailActivity extends AppCompatActivity
                 intent.setData(mBookUri);
                 // Launch the {@link EditBookActivity} to edit the data for the current book.
                 startActivity(intent);
+            }
+        });
+
+        // Set onClickListener on the editButton so that when the button gets clicked
+        // an intent is sent to open the phone to call the supplier's phone number
+        Button orderButton = (Button) findViewById(R.id.order_button);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + mSupplierPhoneNumber));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -152,14 +171,14 @@ public class BookDetailActivity extends AppCompatActivity
             int quantity = cursor.getInt(quantityIndex);
             int productionInfo = cursor.getInt(productionInfoIndex);
             String supplierName = cursor.getString(supplierNameIndex);
-            long supplierPhoneNumber = cursor.getLong(supplierPhoneNumberIndex);
+            mSupplierPhoneNumber = cursor.getLong(supplierPhoneNumberIndex);
 
             // Update the views on the screen with the values from the database
             mTitleTextView.setText(title);
             mPriceTextView.setText(Double.toString(price));
             mQuantityTextView.setText(Integer.toString(quantity));
             mSupplierNameTextView.setText(supplierName);
-            mSupplierPhoneNumberTextView.setText(Long.toString(supplierPhoneNumber));
+            mSupplierPhoneNumberTextView.setText(Long.toString(mSupplierPhoneNumber));
 
             // Display the information about the current production of the book returned
             // by the cursor
