@@ -116,11 +116,10 @@ public class EditBookActivity extends AppCompatActivity
         mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
         mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
         mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
-
         mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
-
         mMinusButton = (Button) findViewById(R.id.minus_button);
         mPlusButton = (Button) findViewById(R.id.plus_button);
+
 
         //Set onClickListener on minus button
         mMinusButton.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +178,7 @@ public class EditBookActivity extends AppCompatActivity
             }
         });
     }
+
 
     /**
      * Setup the dropdown spinner that allows the user to select the information whether the book is
@@ -255,8 +255,15 @@ public class EditBookActivity extends AppCompatActivity
             Toast.makeText(
                     getApplicationContext(), R.string.successful_update_message, Toast.LENGTH_SHORT).show();
         }
-
     }
+
+    //In the Edit Product Activity, user input is validated.
+    // In particular, empty product information is not accepted.
+    // If user inputs invalid product information
+    // (name, price, quantity, supplier name, supplier phone number),
+    // instead of erroring out, the app includes logic to validate that no null
+    // values are accepted. If a null value is inputted, add a Toast that prompts the
+    // user to input the correct information before they can continue.
 
     @NonNull
     @Override
@@ -334,4 +341,5 @@ public class EditBookActivity extends AppCompatActivity
         mEditSupplierPhoneNumber.setText("");
         mProductionInfoSpinner.setSelection(0); // Select "Check" option
     }
+
 }

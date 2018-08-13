@@ -96,10 +96,29 @@
 
     <!-- The text of the book updated successfully message  [CHAR LIMIT=NONE] -->
     <string name="successful_update_message">The book was successfully updated</string>
+
+    <!-- Text for the minus button label [CHAR LIMIT=5] -->
     <string name="minus_button">-</string>
+
+    <!-- Text for the plus button label [CHAR LIMIT=5] -->
     <string name="plus_button">+</string>
+
+    <!-- Text for the error message while deleting book record [CHAR LIMIT=NONE] -->
     <string name="deletion_error_message">Error while deleting the book</string>
+
+    <!-- Text for the successful deleting book record message [CHAR LIMIT=NONE] -->
     <string name="successful_deletion_message">Book successfully deleted</string>
+
+    <!-- Text for the no negative value for the quantity of books allowed message [CHAR LIMIT=NONE] -->
     <string name="no_negative_values_message">Negative values for quantity of books are not allowed</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current book [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
 
 </resources>
