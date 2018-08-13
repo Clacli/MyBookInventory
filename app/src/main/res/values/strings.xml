@@ -61,9 +61,9 @@
     <!-- Title text for the empty view, which describes an empty shelf  [CHAR LIMIT=50] -->
     <string name="empty_view_title_text">There are no books on the shelf&#8230;</string>
 
-    <!-- Subtitle text for the empty view that prompts the user to add a book [CHAR LIMIT=50] -->
-    <string name="empty_view_subtitle_text">Press the blue button, then enter title, price and
-        quantity,  push the light blue button and your book record id saved!</string>
+    <!-- Subtitle text for the empty view that prompts the user to add a book [CHAR LIMIT=NONE] -->
+    <string name="empty_view_subtitle_text">Press the blue button, then enter the required
+        information and push the light blue button.\nYour book record will be saved!</string>
 
     <!-- Text for the "Book saved" message [CHAR LIMIT=50] -->
     <string name="successful_insert_text">Book saved</string>

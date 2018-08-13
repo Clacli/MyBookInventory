@@ -7,4 +7,5 @@
     <dimen name="land_fab_side_margin">8dp</dimen>
     <dimen name="land_fab_margin_top">8dp</dimen>
     <dimen name="fab_layout_margin">16dp</dimen>
+    <dimen name="empty_title_text_marging">24dp</dimen>
 </resources>
