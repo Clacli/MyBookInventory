@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/root_view_padding"
+    android:layout_marginLeft="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginEnd="8dp">
 
 
         <TextView
@@ -14,7 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:textSize="@dimen/book_title_text_size"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/colorAccent"
             tools:text="Book Title" />
 
         <LinearLayout
@@ -38,8 +45,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Price"
-                android:textSize="@dimen/text_size" />
+                android:textColor="#2B3D4D"
+                android:textSize="@dimen/text_size"
+                tools:text="Price" />
 
             <TextView
                 android:id="@+id/detail_currency"
@@ -64,19 +72,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                tools:text="Quantity"
-                android:textSize="@dimen/text_size"/>
-
-
+                android:textColor="#2B3D4D"
+                android:textSize="@dimen/text_size"
+                tools:text="Quantity"/>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/detail_label_info_on_book_production"
@@ -92,48 +99,62 @@
                 android:id="@+id/detail_info_on_book_production"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#2B3D4D"
                 android:textSize="@dimen/text_size"
                 tools:text="No"/>
 
         </LinearLayout>
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp">
 
         <TextView
             android:id="@+id/detail_supplier_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:textColor="#2B3D4D"
             android:textSize="@dimen/text_size"
             tools:text="Supplier\'s name" />
 
         <TextView
             android:id="@+id/detail_supplier_phone_number"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawablePadding="8dp"
+            android:textColor="#2B3D4D"
             android:textSize="@dimen/text_size"
             tools:text="phone" />
+
+    </LinearLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/order_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/order_button" />
+            android:text="@string/order_button"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/edit_book_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:text="@string/edit_button" />
+            android:text="@string/edit_button"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/delete_book_button"
@@ -141,9 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"
-            android:text="@string/delete_button" />
-
+            android:text="@string/delete_button"
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 

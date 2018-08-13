@@ -12,17 +12,18 @@
         android:id="@+id/detail_book_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginTop="32dp"
-        android:textSize="@dimen/book_title_text_size"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/colorAccent"
         tools:text="Book Title" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/detail_book_price_label"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:text="Price"
+            android:textColor="#2B3D4D"
             android:textSize="@dimen/text_size" />
 
         <TextView
@@ -72,8 +74,9 @@
             android:id="@+id/detail_book_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Quantity"
-            android:textSize="@dimen/text_size"/>
+            android:textColor="#2B3D4D"
+            android:textSize="@dimen/text_size"
+            tools:text="Quantity"/>
 
     </LinearLayout>
 
@@ -97,6 +100,7 @@
             android:id="@+id/detail_info_on_book_production"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#2B3D4D"
             android:textSize="@dimen/text_size"
             tools:text="No"/>
 
@@ -106,10 +110,11 @@
         android:id="@+id/order_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/order_button" />
+        android:text="@string/order_button"
+        android:textColor="@android:color/white"/>
 
 
     <TextView
@@ -118,7 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:textSize="@dimen/text_size"
+        android:textColor="#2B3D4D"
+        android:textSize="@dimen/text_size"
             tools:text="Supplier\'s name" />
 
         <TextView
@@ -127,6 +133,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawablePadding="8dp"
+            android:textColor="#2B3D4D"
             android:textSize="@dimen/text_size"
             tools:text="phone" />
 
@@ -134,25 +143,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-       android:layout_marginTop="16dp">
+       android:layout_marginTop="24dp">
 
 
         <Button
             android:id="@+id/edit_book_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
-            android:text="@string/edit_button" />
+            android:text="@string/edit_button"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/delete_book_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:text="@string/delete_button" />
+            android:text="@string/delete_button"
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 
