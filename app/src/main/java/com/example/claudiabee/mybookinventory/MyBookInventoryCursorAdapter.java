@@ -20,9 +20,6 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
     // The quantity of books
     private int mQuantity;
 
-    // The context of the app
-    //Context context;
-
     // The textview holding the quantity of books
     private TextView mBookQuantityTextView;
 
@@ -57,7 +54,7 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
      * @param cursor is the source of book data and is already moved to the correct row.
      */
     @Override
-    public void bindView(View view, final Context context, Cursor cursor) {
+    public void bindView(View view, Context context, Cursor cursor) {
 
         // Find views to populate in inflated view
         TextView bookTitleTextView = (TextView) view.findViewById(R.id.product_name_textview);
@@ -89,7 +86,7 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
                 // Decrease the quantity of bookquantity by 1
                 mQuantity--;
                 if (mQuantity < 0) {
-                    Toast.makeText(context, R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
                     return;
                 }
                 // Set the new value of mBookQuantity on the mBookQuantityTextView
@@ -97,6 +94,4 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
             }
         });
     }
-
-
 }
