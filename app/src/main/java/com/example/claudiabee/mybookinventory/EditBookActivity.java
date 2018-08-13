@@ -132,7 +132,7 @@ public class EditBookActivity extends AppCompatActivity
                 int decreaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
                 // Subtract the user input quantity from the quantity stored into the database
                 if (decreaseBy > mBookQuantity) {
-                    Toast.makeText(getApplicationContext(), "Negative values for book quantity are not allowed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
                     mEditBookQuantity.setText("");
                     return;
                 } else {
@@ -233,7 +233,7 @@ public class EditBookActivity extends AppCompatActivity
                 TextUtils.isEmpty(String.valueOf(mBookQuantity)) && (TextUtils.isEmpty(supplierName) &&
                 TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
                 mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
-            // Since no fields were modified, we can return early without updating a new pet.
+            // Since no fields were modified, we can return early without updating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             Toast.makeText(this, R.string.no_input_entered_message,
                     Toast.LENGTH_SHORT).show();

@@ -100,5 +100,6 @@
     <string name="plus_button">+</string>
     <string name="deletion_error_message">Error while deleting the book</string>
     <string name="successful_deletion_message">Book successfully deleted</string>
+    <string name="no_negative_values_message">Negative values for quantity of books are not allowed</string>
 
 </resources>

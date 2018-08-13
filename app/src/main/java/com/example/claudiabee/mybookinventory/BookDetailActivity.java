@@ -152,7 +152,7 @@ public class BookDetailActivity extends AppCompatActivity
             // Pass in null for the selection and selection args because the mBookUri
             // content URI already identifies the book that we want.
             int rowDeleted = getContentResolver().delete(
-                    mBookUri,            // the current URI of the pet we want to remove from the database.
+                    mBookUri,            // the current URI of the book we want to remove from the database.
                     null,       // the column to select on
                     null); // the value to compare to
 

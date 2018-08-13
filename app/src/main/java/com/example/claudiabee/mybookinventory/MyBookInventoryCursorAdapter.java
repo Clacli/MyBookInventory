@@ -1,6 +1,5 @@
 package com.example.claudiabee.mybookinventory;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
@@ -17,6 +17,14 @@ import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookE
  * list of books held by a {@link Cursor}.
  */
 public class MyBookInventoryCursorAdapter extends CursorAdapter {
+    // The quantity of books
+    private int mQuantity;
+
+    // The context of the app
+    //Context context;
+
+    // The textview holding the quantity of books
+    private TextView mBookQuantityTextView;
 
     /**
      * This is the constructor for a new {@link MyBookInventoryCursorAdapter}.
@@ -49,21 +57,46 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
      * @param cursor is the source of book data and is already moved to the correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
 
         // Find views to populate in inflated view
         TextView bookTitleTextView = (TextView) view.findViewById(R.id.product_name_textview);
         TextView bookPriceTextView = (TextView) view.findViewById(R.id.price_textview);
-        TextView bookQuantityTextView = (TextView) view.findViewById(R.id.quantity_textview); // make global
+        mBookQuantityTextView = (TextView) view.findViewById(R.id.quantity_textview); // make global
 
         // Extract properties from cursor
         String bookTitle = cursor.getString(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE));
         Double bookPrice = cursor.getDouble(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE));
-        int bookQuantity = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY)); // make global
+        mQuantity = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY)); // make global
 
         // Populate textviews with data extracted
         bookTitleTextView.setText(bookTitle);
         bookPriceTextView.setText(String.valueOf(bookPrice));
-        bookQuantityTextView.setText(String.valueOf(bookQuantity));
+        mBookQuantityTextView.setText(String.valueOf(mQuantity));
+
+        // Find the SaleButton
+        Button saleButton = (Button) view.findViewById(R.id.sale_button);
+        // setTag to saleButton (and getTag later in onClick method so that the sale button works
+        // in all list items)
+        saleButton.setTag(mBookQuantityTextView);
+        // Set an onClickListener on the sale button
+        saleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView mBookQuantityView = (TextView) v.getTag();
+                // Get the int value of mBookQuantity from mBookQuantityTextView
+                mQuantity = Integer.parseInt(mBookQuantityView.getText().toString());
+                // Decrease the quantity of bookquantity by 1
+                mQuantity--;
+                if (mQuantity < 0) {
+                    Toast.makeText(context, R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                // Set the new value of mBookQuantity on the mBookQuantityTextView
+                mBookQuantityView.setText(String.valueOf(mQuantity));
+            }
+        });
     }
+
+
 }

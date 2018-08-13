@@ -34,8 +34,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
     public final static String LOG_TAG = BookListActivity.class.getSimpleName();
 
     /**  This constant is the loader ID, it identifies the loader */
-    public static final int BOOK_URI_LOADER = 0;
-
+    private static final int BOOK_URI_LOADER = 0;
     /**
      * This is the current uri
      */
@@ -108,29 +107,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
                 startActivity(new Intent(BookListActivity.this, AddBookActivity.class));
             }
         });
-
-
-        /*
-        Button saleButton = (Button) findViewById(R.id.sale_button);
-        saleButton.setOnClickListener(new View.OnClickListener() {
-
-            // Query current uri to get the quantity
-
-            // Perform subtracion
-            // Define content value
-            @Override
-            public void onClick(View v) {
-
-                TextView quantitytextView = (TextView) findViewById(R.id.quantity_textview);
-                int quantity = Integer.parseInt(quantitytextView.getText().toString().trim());
-                quantity--;
-
-                // Create a ContentValues object. It specifies what data we want to update
-                ContentValues values = new ContentValues();
-                values.put(BookEntry.COLUMN_BOOK_QUANTITY, quantity);
-                getContentResolver().update(currentUri, values, null, null);
-            }
-        });*/
     }
 
     /**
@@ -160,7 +136,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
         } else {
             Toast.makeText(this, R.string.successful_insert_text, Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
