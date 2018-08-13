@@ -44,7 +44,6 @@ public class EditBookActivity extends AppCompatActivity
             BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER
     };
 
-
     // The URI referring to the book stored in the database of which we want to
     // see the detail
     private Uri mBookUri;
@@ -77,17 +76,22 @@ public class EditBookActivity extends AppCompatActivity
     /**
      * Minus button increase the quantity of books
      */
-    Button mMinusButton = (Button) findViewById(R.id.minus_button);
+    Button mMinusButton;
 
     /**
      * Plus button increase the quantity of books
      */
-    Button mPlusButton = (Button) findViewById(R.id.plus_button);
+    Button mPlusButton;
 
     /**
      * TextView displaying the quantity of books passed from the BookDetailActivity
      */
     private TextView mBookQuantityTextView;
+
+    /**
+     * The quantity of book returned by the query
+     */
+    private int mBookQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +118,51 @@ public class EditBookActivity extends AppCompatActivity
         mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
 
         mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
+
+        mMinusButton = (Button) findViewById(R.id.minus_button);
+        mPlusButton = (Button) findViewById(R.id.plus_button);
+
+        //Set onClickListener on minus button
+        mMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the int value of mBookQuantity from mBookQuantityTextView
+                mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString());
+                // Get the user input from the mEditBookQuantity
+                int decreaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+                // Subtract the user input quantity from the quantity stored into the database
+                if (decreaseBy > mBookQuantity) {
+                    Toast.makeText(getApplicationContext(), "Negative values for book quantity are not allowed", Toast.LENGTH_LONG).show();
+                    mEditBookQuantity.setText("");
+                    return;
+                } else {
+                    mBookQuantity = mBookQuantity - decreaseBy;
+                    // Set the new value of mBookQuantity on the mBookQuantityTextView
+                    mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                    // Clear the mEditBookQuantity EditText
+                    mEditBookQuantity.setText("");
+                }
+
+            }
+        });
+
+        //Set onClickListener on plus button
+        mPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the int value of mBookQuantity from mBookQuantityTextView
+                mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString());
+                // Get the user input from the mEditBookQuantity
+                int increaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+                // Add the user input quantity from the quantity stored into the database
+                mBookQuantity = mBookQuantity + increaseBy;
+                // Set the new value of mBookQuantity on the mBookQuantityTextView
+                mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                // Clear the mEditBookQuantity EditText
+                mEditBookQuantity.setText("");
+            }
+        });
+
         // Setup spinner
         setupSpinner();
 
@@ -175,13 +224,13 @@ public class EditBookActivity extends AppCompatActivity
         // Read from the input fields and get the values to be passed into the ContentValue Object
         String bookTitle = mEditBookTitle.getText().toString().trim();
         double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
-        int bookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString().trim());
+        mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString().trim());
         String supplierName = mEditSupplierName.getText().toString().trim();
         long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
 
         /*// Check if all the fields in the editor are blank
         if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(String.valueOf(bookPrice)) &&
-                TextUtils.isEmpty(String.valueOf(bookQuantity)) && (TextUtils.isEmpty(supplierName) &&
+                TextUtils.isEmpty(String.valueOf(mBookQuantity)) && (TextUtils.isEmpty(supplierName) &&
                 TextUtils.isEmpty(String.valueOf(supplierPhoneNumber)) &&
                 mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
             // Since no fields were modified, we can return early without updating a new pet.
@@ -190,20 +239,6 @@ public class EditBookActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return;
         }*/
-
-        /*int decreaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim()) ;
-
-        int increaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
-
-
-        //Set onClickListener on minus button
-        mMinusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                retur
-            }
-        });*/
 
 
         // Create a ContentValues object. It specifies what data we want to insert
@@ -214,7 +249,7 @@ public class EditBookActivity extends AppCompatActivity
         // to insert a new book into the books table of the database.
         values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
         values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
-        values.put(BookEntry.COLUMN_BOOK_QUANTITY, bookQuantity);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, mBookQuantity);
         values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
