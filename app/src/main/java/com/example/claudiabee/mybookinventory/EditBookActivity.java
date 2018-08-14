@@ -29,6 +29,9 @@ import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class EditBookActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -64,29 +67,32 @@ public class EditBookActivity extends AppCompatActivity
                 }
             };
 
-
-
     // The URI referring to the book stored in the database of which we want to
     // see the detail
     private Uri mBookUri;
 
     /** EditText field to enter the name of the new book to insert into a database */
-    private EditText mEditBookTitle;
+    @BindView(R.id.edit_book_title) EditText mEditBookTitle;
 
     /** EditText field to enter the price of the new book to insert into a database */
-    private EditText mEditBookPrice;
+    @BindView(R.id.edit_book_price) EditText mEditBookPrice;
+
+    /**
+     * TextView displaying the quantity of books passed from the BookDetailActivity
+     */
+    @BindView(R.id.received_book_quantity) TextView mBookQuantityTextView;
 
     /** EditText field to enter the quantity of the new book to insert into a database */
-    private EditText mEditBookQuantity;
+    @BindView(R.id.edit_book_quantity) EditText mEditBookQuantity;
 
     /** EditText field to enter the name of the supplier of the book to insert into a database */
-    private EditText mEditSupplierName;
+    @BindView(R.id.edit_supplier_name) EditText mEditSupplierName;
 
     /** EditText field to enter the phone number of the suppliers of books to insert into a database */
-    private EditText mEditSupplierPhoneNumber;
+    @BindView(R.id.edit_supplier_phone_number) EditText mEditSupplierPhoneNumber;
 
     /** Spinner from which to chose the option about the book being out of print or not */
-    private Spinner mProductionInfoSpinner;
+    @BindView(R.id.edit_info_on_book_production_spinner) Spinner mProductionInfoSpinner;
 
     /**
      * Info whether the book is out of print or not. The possible valid values are:
@@ -98,17 +104,17 @@ public class EditBookActivity extends AppCompatActivity
     /**
      * Minus button increase the quantity of books
      */
-    Button mMinusButton;
+    @BindView(R.id.minus_button) Button mMinusButton;
 
     /**
      * Plus button increase the quantity of books
      */
-    Button mPlusButton;
+    @BindView(R.id.plus_button) Button mPlusButton;
 
-    /**
-     * TextView displaying the quantity of books passed from the BookDetailActivity
-     */
-    private TextView mBookQuantityTextView;
+    /** When this Fab gets pressed book record update is saved */
+    @BindView(R.id.edit_fab) FloatingActionButton editFab;
+
+
 
     /**
      * The quantity of book returned by the query
@@ -119,6 +125,8 @@ public class EditBookActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_book);
+
+        ButterKnife.bind(this);
 
         // Return the Intent that started this activity in edit mode using the getIntent()
         Intent intent = getIntent();
@@ -132,15 +140,15 @@ public class EditBookActivity extends AppCompatActivity
         }
 
         // Instantiate the EditText that we will need to read user input from
-        mEditBookTitle = (EditText) findViewById(R.id.edit_book_title);
-        mEditBookPrice = (EditText) findViewById(R.id.edit_book_price);
-        mBookQuantityTextView = (TextView) findViewById(R.id.received_book_quantity);
-        mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
-        mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
-        mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
-        mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
-        mMinusButton = (Button) findViewById(R.id.minus_button);
-        mPlusButton = (Button) findViewById(R.id.plus_button);
+        //mEditBookTitle = (EditText) findViewById(R.id.edit_book_title);
+        //mEditBookPrice = (EditText) findViewById(R.id.edit_book_price);
+        //mBookQuantityTextView = (TextView) findViewById(R.id.received_book_quantity);
+        //mEditSupplierName = (EditText) findViewById(R.id.edit_supplier_name);
+        //mEditSupplierPhoneNumber = (EditText) findViewById(R.id.edit_supplier_phone_number);
+        //mProductionInfoSpinner = (Spinner) findViewById(R.id.edit_info_on_book_production_spinner);
+        //mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
+        //mMinusButton = (Button) findViewById(R.id.minus_button);
+        //mPlusButton = (Button) findViewById(R.id.plus_button);
 
 
         // Attach the OnTouchListener to the Views and to the Spinner objects to detect
@@ -227,7 +235,7 @@ public class EditBookActivity extends AppCompatActivity
         setupSpinner();
 
         // Create an instance of the FAB in the edit_book_layout
-        FloatingActionButton editFab = (FloatingActionButton) findViewById(R.id.edit_fab);
+        // FloatingActionButton editFab = (FloatingActionButton) findViewById(R.id.edit_fab);
         // Set an onClickListener on the fab
         editFab.setOnClickListener(new View.OnClickListener() {
             @Override
