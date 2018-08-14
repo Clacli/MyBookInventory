@@ -251,10 +251,24 @@ public class EditBookActivity extends AppCompatActivity
     private void updateBook() {
         // Read from the input fields and get the values to be passed into the ContentValue Object
         String bookTitle = mEditBookTitle.getText().toString().trim();
-        double bookPrice = Double.parseDouble(mEditBookPrice.getText().toString().trim());
-        mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString().trim());
+        String bookPriceString = mEditBookPrice.getText().toString().trim();
+        String bookQuantityString = mBookQuantityTextView.getText().toString().trim();
         String supplierName = mEditSupplierName.getText().toString().trim();
-        long supplierPhoneNumber = Long.parseLong(mEditSupplierPhoneNumber.getText().toString().trim());
+        String supplierPhoneNumberString = mEditSupplierPhoneNumber.getText().toString().trim();
+        //
+
+        //Check if all the fields in the editor are blank
+        if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(bookPriceString) &&
+                TextUtils.isEmpty(bookQuantityString) && (TextUtils.isEmpty(supplierName) &&
+                TextUtils.isEmpty(supplierPhoneNumberString) &&
+                mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
+            // Since no fields were modified, we can return early without creating a new book.
+            // No need to create ContentValues and no need to do any ContentProvider operations.
+            Toast.makeText(getApplicationContext(), R.string.ask_for_valid_inputs_message,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         // Create a ContentValues object. It specifies what data we want to insert
         ContentValues values = new ContentValues();
@@ -262,12 +276,63 @@ public class EditBookActivity extends AppCompatActivity
         // Populate the ContentValues object with
         // key (column name) - values (obtained from the user input) and use it later
         // to insert a new book into the books table of the database.
-        values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
-        values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
-        values.put(BookEntry.COLUMN_BOOK_QUANTITY, mBookQuantity);
+        if (TextUtils.isEmpty(bookTitle)) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_a_valid_title_message,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            values.put(BookEntry.COLUMN_BOOK_TITLE, bookTitle);
+        }
+        // If the price of the book is not provided by the user, do not try to parse the String into
+        // an integer value.
+        if (TextUtils.isEmpty(bookPriceString)) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_valid_price_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else if (!TextUtils.isEmpty(bookPriceString ) || Double.parseDouble(bookPriceString) < 0) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_valid_price_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else {
+            double bookPrice = Double.parseDouble(bookPriceString);
+            values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
+        }
+        // If the quantity of the book is not provided by the user, do not try to parse the String into
+        // an integer value.
+        if (TextUtils.isEmpty(bookQuantityString)) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_quantity_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else if (!TextUtils.isEmpty(bookQuantityString ) || Integer.parseInt(bookPriceString) < 0) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_quantity_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else {
+            int mBookQuantity = Integer.parseInt(bookPriceString);
+            values.put(BookEntry.COLUMN_BOOK_QUANTITY, mBookQuantity);
+        }
         values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
+        if (TextUtils.isEmpty(supplierName)) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_supplier_name_message,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierName);
+        }
+        // If the phone number of the book supplier is not provided by the user, do not try to
+        // parse the String into an integer value.
+        if (TextUtils.isEmpty(supplierPhoneNumberString)) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_valid_phone_number_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else if (!TextUtils.isEmpty(bookQuantityString ) || Integer.parseInt(bookPriceString) < 0) {
+            Toast.makeText(getApplicationContext(), R.string.ask_for_valid_phone_number_message,
+                    Toast.LENGTH_SHORT).show();
+                    return;
+        } else {
+            long supplierPhoneNumber = Long.parseLong(supplierPhoneNumberString);
+            values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER, supplierPhoneNumber);
+        }
 
         // Update the book already existing in the database, returning the number of rows affected
         // by the update
@@ -284,14 +349,6 @@ public class EditBookActivity extends AppCompatActivity
                     getApplicationContext(), R.string.successful_update_message, Toast.LENGTH_SHORT).show();
         }
     }
-
-    //In the Edit Product Activity, user input is validated.
-    // In particular, empty product information is not accepted.
-    // If user inputs invalid product information
-    // (name, price, quantity, supplier name, supplier phone number),
-    // instead of erroring out, the app includes logic to validate that no null
-    // values are accepted. If a null value is inputted, add a Toast that prompts the
-    // user to input the correct information before they can continue.
 
     @NonNull
     @Override

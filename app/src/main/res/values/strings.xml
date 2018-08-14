@@ -121,5 +121,11 @@
 
     <!-- Dialog button text for the option to keep editing the current book [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
+    <string name="ask_for_valid_inputs_message">Please update the book with valid inputs</string>
+    <string name="ask_for_a_valid_title_message">I can\'t update the book record now. Please enter a valid book title next time</string>
+    <string name="ask_for_valid_price_message">I can\'t update the book record now. Please enter a valid price for the book next time</string>
+    <string name="ask_for_quantity_message">I can\'t update the book record now. Please enter a valid quantity for the book next time</string>
+    <string name="ask_for_supplier_name_message">I can\'t update the book record now. Please enter the name of the book supplier next time</string>
+    <string name="ask_for_valid_phone_number_message">I can\'t update the book record now. Please enter a valid phone number next time</string>
 
 </resources>
