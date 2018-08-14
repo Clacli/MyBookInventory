@@ -1,6 +1,7 @@
 package com.example.claudiabee.mybookinventory;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,8 +12,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +49,22 @@ public class EditBookActivity extends AppCompatActivity
             BookEntry.COLUMN_BOOK_SUPPLIER_NAME,
             BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER
     };
+
+    // Variable associated to listener for any touches on a View
+    private boolean mBookHasChanged = false;
+
+    // OnTouchListener that listens for any user touches on a View, implying that they are modifying
+    // the view, and we change the mBookHasChanged boolean to true.
+    private View.OnTouchListener mTouchListener =
+            new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    mBookHasChanged = true;
+                    return false;
+                }
+            };
+
+
 
     // The URI referring to the book stored in the database of which we want to
     // see the detail
@@ -120,6 +141,18 @@ public class EditBookActivity extends AppCompatActivity
         mEditBookQuantity = (EditText) findViewById(R.id.edit_book_quantity);
         mMinusButton = (Button) findViewById(R.id.minus_button);
         mPlusButton = (Button) findViewById(R.id.plus_button);
+
+
+        // Attach the OnTouchListener to the Views and to the Spinner objects to detect
+        // any input from the user
+        mEditBookTitle.setOnTouchListener(mTouchListener);
+        mEditBookPrice.setOnTouchListener(mTouchListener);
+        mEditBookQuantity.setOnTouchListener(mTouchListener);
+        mEditSupplierName.setOnTouchListener(mTouchListener);
+        mEditSupplierPhoneNumber.setOnTouchListener(mTouchListener);
+        mProductionInfoSpinner.setOnTouchListener(mTouchListener);
+        mEditBookQuantity.setOnTouchListener(mTouchListener);
+
 
 
         //Set onClickListener on minus button
@@ -425,6 +458,96 @@ public class EditBookActivity extends AppCompatActivity
         mEditSupplierName.setText("");
         mEditSupplierPhoneNumber.setText("");
         mProductionInfoSpinner.setSelection(0); // Select "Check" option
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/edit_book_menu_editor.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.edit_book_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+
+                // If the pet hasn't changed, continue with navigating up to parent activity
+                // which is the {@link CatalogActivity}.
+                if (!mBookHasChanged) {
+                    finish();
+                }
+
+                // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                // Create a click listener to handle the user confirming that
+                // changes should be discarded
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User clicked "Discard" button, navigate to parent activity.
+                                // I don\'t call:
+                                // NavUtils.navigateUpFromSameTask(EditBookActivity.this);
+                                // it makes the app  navigate to the parent activity which
+                                // present itself with empty fields. Calling
+                                finish();
+                                // makes you go back to the previous activity, which is in this case
+                                // the {@link DetailActivity}, with all its data untouched, unchanged
+                                // and present.
+                            }
+                        };
+                // Show a dialog that notifies the user of unsaved changes
+                showUnsavedChangesDialog(discardButtonClickListener);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    // Hook up the back button to the AlertDialog
+    @Override
+    public void onBackPressed() {
+        // If the pet han not changed, continue with handling back button press
+        if (!mBookHasChanged) {
+            super.onBackPressed();
+        }
+        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+        // Create a click listener to handle the user confirming that changes should be discarded.
+        DialogInterface.OnClickListener discardButtonClicklistener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The user clicked "Discard" button, close the current activity
+                        finish();
+                    }
+                };
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClicklistener);
+    }
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonclickListener) {
+
+        // Create an AlertDialog.Builder and set the message, and click listeners for the
+        // negative and positive buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonclickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // User clicked the "Keep editing" button, so dismiss the dialog and continue
+                // editing the book
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

@@ -29,7 +29,6 @@ public class AddBookActivity extends AppCompatActivity {
     /** This String constants is for logging */
     public static final String LOG_TAG = AddBookActivity.class.getSimpleName();
 
-
     // Variable associated to listener for any touches on a View
     private boolean mBookHasChanged = false;
 
@@ -43,7 +42,6 @@ public class AddBookActivity extends AppCompatActivity {
                     return false;
                 }
             };
-
 
     /** EditText field to enter the name of the new book to insert into a database */
     private EditText mEditBookTitle;
@@ -92,7 +90,6 @@ public class AddBookActivity extends AppCompatActivity {
         mEditSupplierPhoneNumber.setOnTouchListener(mTouchListener);
         mProductionInfoSpinner.setOnTouchListener(mTouchListener);
         mEditBookQuantity.setOnTouchListener(mTouchListener);
-
 
         // Find the Fab with ID == fab and set an action upon it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
