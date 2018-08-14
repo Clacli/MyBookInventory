@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -127,19 +128,33 @@ public class EditBookActivity extends AppCompatActivity
             public void onClick(View v) {
                 // Get the int value of mBookQuantity from mBookQuantityTextView
                 mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString());
-                // Get the user input from the mEditBookQuantity
-                int decreaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
-                // Subtract the user input quantity from the quantity stored into the database
-                if (decreaseBy > mBookQuantity) {
-                    Toast.makeText(getApplicationContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
-                    mEditBookQuantity.setText("");
-                    return;
+                // Get the string input from the EditText
+                String decreaseByQuantityString = mEditBookQuantity.getText().toString().trim();
+                // Check if the user has left an input in the EditText
+                if (TextUtils.isEmpty(decreaseByQuantityString)) {
+                    if (mBookQuantity == 0) {
+                        Toast.makeText(getApplicationContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
+                    } else {
+                        // Decrease mBookQuantity by one
+                        mBookQuantity--;
+                        // Set the updated quantity of book in the mBookQuantityTextView
+                        mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                    }
                 } else {
-                    mBookQuantity = mBookQuantity - decreaseBy;
-                    // Set the new value of mBookQuantity on the mBookQuantityTextView
-                    mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
-                    // Clear the mEditBookQuantity EditText
-                    mEditBookQuantity.setText("");
+                    // Get the user input from the mEditBookQuantity
+                    int decreaseByQuantity = Integer.parseInt(decreaseByQuantityString);
+                    // Subtract the user input quantity from the quantity stored into the database
+                    if (decreaseByQuantity > mBookQuantity) {
+                        Toast.makeText(getApplicationContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
+                        mEditBookQuantity.setText("");
+                    } else {
+                        mBookQuantity = mBookQuantity - decreaseByQuantity;
+                        // Set the new value of mBookQuantity on the mBookQuantityTextView
+                        mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                        // Clear the mEditBookQuantity EditText
+                        mEditBookQuantity.setText("");
+
+                    }
                 }
 
             }
@@ -151,14 +166,27 @@ public class EditBookActivity extends AppCompatActivity
             public void onClick(View v) {
                 // Get the int value of mBookQuantity from mBookQuantityTextView
                 mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString());
-                // Get the user input from the mEditBookQuantity
-                int increaseBy = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
-                // Add the user input quantity from the quantity stored into the database
-                mBookQuantity = mBookQuantity + increaseBy;
-                // Set the new value of mBookQuantity on the mBookQuantityTextView
-                mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
-                // Clear the mEditBookQuantity EditText
-                mEditBookQuantity.setText("");
+                // Get the string input from the EditText
+                String increaseByQuantityString = mEditBookQuantity.getText().toString().trim();
+                // Check if the user has left an input in the EditText
+                if (TextUtils.isEmpty(increaseByQuantityString)) {
+                        // Increase mBookQuantity by one
+                        mBookQuantity++;
+                    // Set the updated quantity of book in the mBookQuantityTextView
+                        mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                } else {
+                    // Get the int value of mBookQuantity from mBookQuantityTextView
+                    mBookQuantity = Integer.parseInt(mBookQuantityTextView.getText().toString());
+                    // Get the user input from the mEditBookQuantity
+                    int increaseByQuantity = Integer.parseInt(mEditBookQuantity.getText().toString().trim());
+                    // Add the user input quantity from the quantity stored into the database
+                    mBookQuantity = mBookQuantity + increaseByQuantity;
+                    // Set the new value of mBookQuantity on the mBookQuantityTextView
+                    mBookQuantityTextView.setText(String.valueOf(mBookQuantity));
+                    // Clear the mEditBookQuantity EditText
+                    mEditBookQuantity.setText("");
+
+                }
             }
         });
 
