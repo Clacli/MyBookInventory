@@ -110,6 +110,15 @@
     <!-- Text for the successful deleting book record message [CHAR LIMIT=NONE] -->
     <string name="successful_deletion_message">Book successfully deleted</string>
 
+    <!-- Dialog message to ask the user to confirm deleting the current book [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this book?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current book [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current book [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+
     <!-- Text for the no negative value for the quantity of books allowed message [CHAR LIMIT=NONE] -->
     <string name="no_negative_values_message">Negative values for quantity of books are not allowed</string>
 
@@ -121,11 +130,23 @@
 
     <!-- Dialog button text for the option to keep editing the current book [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
+
+    <!-- Message requesting valid inputs in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_valid_inputs_message">Please update the book with valid inputs</string>
+
+    <!-- Message requesting valid title in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_a_valid_title_message">I can\'t update the book record now. Please enter a valid book title next time</string>
+
+    <!-- Message requesting valid price in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_valid_price_message">I can\'t update the book record now. Please enter a valid price for the book next time</string>
+
+    <!-- Message requesting valid quantity in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_quantity_message">I can\'t update the book record now. Please enter a valid quantity for the book next time</string>
+
+    <!-- Message requesting valid name of book supplier in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_supplier_name_message">I can\'t update the book record now. Please enter the name of the book supplier next time</string>
+
+    <!-- Message requesting valid phone number in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_valid_phone_number_message">I can\'t update the book record now. Please enter a valid phone number next time</string>
 
 </resources>

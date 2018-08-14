@@ -474,7 +474,7 @@ public class EditBookActivity extends AppCompatActivity
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
 
-                // If the pet hasn't changed, continue with navigating up to parent activity
+                // If the book hasn't changed, continue with navigating up to parent activity
                 // which is the {@link CatalogActivity}.
                 if (!mBookHasChanged) {
                     finish();
@@ -509,7 +509,7 @@ public class EditBookActivity extends AppCompatActivity
     // Hook up the back button to the AlertDialog
     @Override
     public void onBackPressed() {
-        // If the pet han not changed, continue with handling back button press
+        // If the book han not changed, continue with handling back button press
         if (!mBookHasChanged) {
             super.onBackPressed();
         }
