@@ -149,4 +149,7 @@
     <!-- Message requesting valid phone number in order to update the book entry [CHAR LIMIT=NONE] -->
     <string name="ask_for_valid_phone_number_message">I can\'t update the book record now. Please enter a valid phone number next time</string>
 
+    <!-- Message requesting to enter all the required fields in Add mode in order to save the book entry [CHAR LIMIT=NONE] -->
+    <string name="enter_all_info_to_save_book_message">You need to enter all the required information to save a book</string>
+
 </resources>

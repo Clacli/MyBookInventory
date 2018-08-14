@@ -21,6 +21,9 @@ import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * In this Activity the user can create a new book and store it in a database.
  */
@@ -44,22 +47,25 @@ public class AddBookActivity extends AppCompatActivity {
             };
 
     /** EditText field to enter the name of the new book to insert into a database */
-    private EditText mEditBookTitle;
+    @BindView(R.id.add_book_title) EditText mEditBookTitle;
 
     /** EditText field to enter the price of the new book to insert into a database */
-    private EditText mEditBookPrice;
+    @BindView(R.id.add_book_price) EditText mEditBookPrice;
 
     /** EditText field to enter the quantity of the new book to insert into a database */
-    private EditText mEditBookQuantity;
+    @BindView(R.id.add_book_quantity) EditText mEditBookQuantity;
 
     /** EditText field to enter the name of the supplier of the book to insert into a database */
-    private EditText mEditSupplierName;
+    @BindView(R.id.add_supplier_name) EditText mEditSupplierName;
 
     /** EditText field to enter the phone number of the suppliers of books to insert into a database */
-    private EditText mEditSupplierPhoneNumber;
+    @BindView(R.id.add_supplier_phone_number) EditText mEditSupplierPhoneNumber;
 
     /** Spinner from which to chose the option about the book being out of print or not */
-    private Spinner mProductionInfoSpinner;
+    @BindView(R.id.add_info_on_book_production_spinner) Spinner mProductionInfoSpinner;
+
+    /** This is the Floating Action Button, when pushed the book record gets saved */
+    @BindView(R.id.fab2) FloatingActionButton fab;
 
     /**
      * Info whether the book is out of print or not. The possible valid values are:
@@ -73,13 +79,7 @@ public class AddBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
-        // Instantiate the EditText that we will need to read user input from
-        mEditBookTitle = (EditText) findViewById(R.id.add_book_title);
-        mEditBookPrice = (EditText) findViewById(R.id.add_book_price);
-        mEditBookQuantity = (EditText) findViewById(R.id.add_book_quantity);
-        mEditSupplierName = (EditText) findViewById(R.id.add_supplier_name);
-        mEditSupplierPhoneNumber = (EditText) findViewById(R.id.add_supplier_phone_number);
-        mProductionInfoSpinner = (Spinner) findViewById(R.id.add_info_on_book_production_spinner);
+        ButterKnife.bind(this);
 
         // Attach the OnTouchListener to the Views and to the Spinner objects to detect
         // any input from the user
@@ -91,8 +91,7 @@ public class AddBookActivity extends AppCompatActivity {
         mProductionInfoSpinner.setOnTouchListener(mTouchListener);
         mEditBookQuantity.setOnTouchListener(mTouchListener);
 
-        // Find the Fab with ID == fab and set an action upon it
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+        /** When the FAB gets clicked the new book gets saved */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,13 +153,13 @@ public class AddBookActivity extends AppCompatActivity {
         String supplierPhoneNumberString = mEditSupplierPhoneNumber.getText().toString().trim();
 
         //Check if all the fields in the editor are blank
-       if (TextUtils.isEmpty(bookTitle) && TextUtils.isEmpty(bookPriceString) &&
-                TextUtils.isEmpty(bookQuantityString) && (TextUtils.isEmpty(supplierName) &&
-                TextUtils.isEmpty(supplierPhoneNumberString) &&
+       if (TextUtils.isEmpty(bookTitle) || TextUtils.isEmpty(bookPriceString) ||
+                TextUtils.isEmpty(bookQuantityString) || (TextUtils.isEmpty(supplierName) ||
+                TextUtils.isEmpty(supplierPhoneNumberString) ||
                 mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
             // Since no fields were modified, we can return early without creating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
-            Toast.makeText(getApplicationContext(), "No new book saved",
+            Toast.makeText(getApplicationContext(), R.string.enter_all_info_to_save_book_message,
                     Toast.LENGTH_SHORT).show();
             return;
         }
