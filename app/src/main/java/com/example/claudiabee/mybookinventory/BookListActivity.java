@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Displays a list of books stored in a database
  */
@@ -50,7 +53,13 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 
 
     /** This is the ListView that displays the list of books */
-    ListView mBookListView;
+    @BindView(R.id.book_listview) ListView mBookListView;
+
+    /** This is the empty view */
+    @BindView(R.id.empty_view) View emptyView;
+
+    /** This is the Floating Action Button */
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     /**
      *  This is the Cursor Adapter used to inflate list item views to which bind data to be
@@ -62,12 +71,9 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+        ButterKnife.bind(this);
 
-        // Create an instance of the ListView displaying the list of books of the inventory.
-        mBookListView = (ListView) findViewById(R.id.book_listview);
-
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
-        View emptyView = findViewById(R.id.empty_view);
+        // Set the empty view on the ListView, so that it only shows when the list has 0 items.
         mBookListView.setEmptyView(emptyView);
 
         // Setup a CursorAdapter to create list item view for each row of the books data
@@ -99,7 +105,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
         /**
          * When this Fab gets clicked an intent is sent to start the AddBookActivity
          */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
