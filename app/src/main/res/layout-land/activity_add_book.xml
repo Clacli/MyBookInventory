@@ -17,7 +17,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/book_label"
-        android:textSize="@dimen/book_title_text_size" />
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/colorAccent" />
 
     <EditText
         android:id="@+id/add_book_title"

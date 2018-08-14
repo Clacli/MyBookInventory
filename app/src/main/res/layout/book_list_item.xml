@@ -6,18 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/root_view_padding"
     android:focusable="false"
     android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/product_name_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/colorAccent"
+        style="@style/CommonBookLabelTextView"
+        android:paddingBottom="@dimen/list_item_title_vertical_spacing"
         tools:text="Erbe"/>
 
     <RelativeLayout
@@ -42,13 +38,13 @@
         android:orientation="horizontal"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:padding="8dp">
+        android:padding="@dimen/list_price_container_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="@dimen/list_price_label_side_spacing"
+            android:layout_marginRight="@dimen/list_price_label_side_spacing"
             android:text="@string/price"
             android:textSize="@dimen/text_size"/>
 
@@ -57,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="#2B3D4D"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size"
             tools:text="100"/>
 
@@ -81,7 +77,7 @@
         android:layout_below="@id/price_container"
         android:layout_alignLeft="@id/price_container"
         android:layout_alignStart="@id/price_container"
-        android:padding="8dp">
+        android:padding="@dimen/list_quantity_container_spacing">
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="#2B3D4D"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size"
             tools:text="7"/>
 

@@ -8,4 +8,19 @@
     <dimen name="land_fab_margin_top">8dp</dimen>
     <dimen name="fab_layout_margin">16dp</dimen>
     <dimen name="empty_title_text_marging">24dp</dimen>
+    <dimen name="main_text_container_vertical_spacing">32dp</dimen>
+    <dimen name="title_vertical_spacing">16dp</dimen>
+    <dimen name="list_item_title_vertical_spacing">8dp</dimen>
+    <dimen name="list_price_container_padding">8dp</dimen>
+    <dimen name="list_price_label_side_spacing">8dp</dimen>
+    <dimen name="list_quantity_container_spacing">8dp</dimen>
+    <dimen name="detail_title_text_view">32dp</dimen>
+    <dimen name="half_vertical_spacing">8dp</dimen>
+    <dimen name="half_side_spacing">8dp</dimen>
+    <dimen name="side_spacing">16dp</dimen>
+    <dimen name="quantity_picker_button_side_lenght">48dp</dimen>
+    <dimen name="drawable_padding">8dp</dimen>
+    <dimen name="vertical_spacing">16dp</dimen>
+    <dimen name="port_order_button_vertical_spacing">24dp</dimen>
+    <dimen name="port_button_container_vertical_spacing">24dp</dimen>
 </resources>

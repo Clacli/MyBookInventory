@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/root_view_padding">
 
     <TextView
         android:id="@+id/detail_book_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/detail_title_text_view"
+        android:layout_marginTop="@dimen/detail_title_text_view"
         android:fontFamily="sans-serif-medium"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColor="@color/colorAccent"
@@ -23,15 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="@dimen/vertical_spacing">
 
         <TextView
             android:id="@+id/detail_book_price_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/side_spacing"
+            android:layout_marginRight="@dimen/side_spacing"
             android:text="@string/price"
             android:textSize="@dimen/text_size" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:text="Price"
-            android:textColor="#2B3D4D"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size" />
 
         <TextView
@@ -58,15 +58,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginBottom="@dimen/half_vertical_spacing"
+        android:layout_marginTop="@dimen/half_vertical_spacing">
 
         <TextView
             android:id="@+id/detail_book_quantity_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/side_spacing"
+            android:layout_marginRight="@dimen/side_spacing"
             android:text="@string/quantity"
             android:textSize="@dimen/text_size"/>
 
@@ -74,7 +74,7 @@
             android:id="@+id/detail_book_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#2B3D4D"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size"
             tools:text="Quantity"/>
 
@@ -84,15 +84,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginBottom="@dimen/vertical_spacing"
+        android:layout_marginTop="@dimen/half_vertical_spacing">
 
         <TextView
             android:id="@+id/detail_label_info_on_book_production"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/side_spacing"
+            android:layout_marginRight="@dimen/side_spacing"
             android:text="@string/detail_out_of_print_text"
             android:textSize="@dimen/text_size" />
 
@@ -100,7 +100,7 @@
             android:id="@+id/detail_info_on_book_production"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#2B3D4D"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size"
             tools:text="No"/>
 
@@ -110,8 +110,8 @@
         android:id="@+id/order_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="@dimen/port_order_button_vertical_spacing"
+        android:layout_marginBottom="@dimen/port_order_button_vertical_spacing"
         android:layout_gravity="center_horizontal"
         android:text="@string/order_button"
         android:textColor="@android:color/white"/>
@@ -121,21 +121,22 @@
             android:id="@+id/detail_supplier_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-        android:textColor="#2B3D4D"
-        android:textSize="@dimen/text_size"
+            android:layout_marginBottom="@dimen/half_vertical_spacing"
+            android:layout_marginTop="@dimen/half_vertical_spacing"
+            android:textColor="@color/data_text"
+            android:textSize="@dimen/text_size"
             tools:text="Supplier\'s name" />
 
         <TextView
             android:id="@+id/detail_supplier_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/vertical_spacing"
+            android:layout_marginTop="@dimen/half_vertical_spacing"
             android:drawableLeft="@drawable/ic_phone"
-            android:drawablePadding="8dp"
-            android:textColor="#2B3D4D"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:textColor="@color/data_text"
             android:textSize="@dimen/text_size"
             tools:text="phone" />
 
@@ -143,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-       android:layout_marginTop="24dp">
+        android:layout_marginTop="@dimen/port_button_container_vertical_spacing">
 
 
         <Button

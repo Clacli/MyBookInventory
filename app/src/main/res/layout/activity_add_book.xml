@@ -2,22 +2,23 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/root_view_padding">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/main_text_container_vertical_spacing"
+    android:layout_marginTop="@dimen/main_text_container_vertical_spacing">
 
     <TextView
         android:id="@+id/book_label_add_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/CommonBookLabelTextView"
+        android:layout_marginBottom="@dimen/title_vertical_spacing"
         android:gravity="center"
-        android:text="@string/book_label"
-        android:textSize="@dimen/book_title_text_size" />
+        android:text="@string/book_label"/>
 
     <EditText
         android:id="@+id/add_book_title"
@@ -53,20 +54,22 @@
         android:id="@+id/add_book_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vertical_spacing"
         android:hint="@string/quantity_hint"
         android:inputType="number"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/vertical_spacing">
 
         <TextView
             android:id="@+id/add_out_of_print_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/side_spacing"
+            android:layout_marginRight="@dimen/side_spacing"
             android:text="@string/out_of_print_label"
             android:textSize="@dimen/text_size" />
 
@@ -83,6 +86,7 @@
         android:id="@+id/supplier_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/half_vertical_spacing"
         android:gravity="center"
         android:text="@string/supplier_label"
         android:textSize="@dimen/text_size" />
@@ -91,6 +95,7 @@
         android:id="@+id/add_supplier_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/half_vertical_spacing"
         android:hint="@string/supplier_name_hint"
         android:inputType="textCapWords" />
 
@@ -98,6 +103,7 @@
         android:id="@+id/add_supplier_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/half_vertical_spacing"
         android:hint="@string/supplier_phone_number_hint"
         android:inputType="phone" />
 
