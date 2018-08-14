@@ -80,15 +80,16 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 TextView mBookQuantityView = (TextView) v.getTag();
-                // Get the int value of mBookQuantity from mBookQuantityTextView
-                mQuantity = Integer.parseInt(mBookQuantityView.getText().toString());
-                // Decrease the quantity of bookquantity by 1
-                mQuantity--;
-                if (mQuantity < 0) {
+                if (mQuantity == 0) {
                     Toast.makeText(v.getContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
                     return;
                 }
+                // Get the int value of mBookQuantity from mBookQuantityTextView
+                mQuantity = Integer.parseInt(mBookQuantityView.getText().toString()) - 1;
+                // Decrease the quantity of bookquantity by 1
+
                 // Set the new value of mBookQuantity on the mBookQuantityTextView
                 mBookQuantityView.setText(String.valueOf(mQuantity));
             }

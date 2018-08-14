@@ -321,11 +321,11 @@ public class EditBookActivity extends AppCompatActivity
         if (TextUtils.isEmpty(bookPriceString)) {
             Toast.makeText(getApplicationContext(), R.string.ask_for_valid_price_message,
                     Toast.LENGTH_SHORT).show();
-                    return;
-        } else if (!TextUtils.isEmpty(bookPriceString ) || Double.parseDouble(bookPriceString) < 0) {
+            return;
+        } else if (!TextUtils.isEmpty(bookPriceString) && Double.parseDouble(bookPriceString) < 0) {
             Toast.makeText(getApplicationContext(), R.string.ask_for_valid_price_message,
                     Toast.LENGTH_SHORT).show();
-                    return;
+            return;
         } else {
             double bookPrice = Double.parseDouble(bookPriceString);
             values.put(BookEntry.COLUMN_BOOK_PRICE, bookPrice);
@@ -336,12 +336,12 @@ public class EditBookActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), R.string.ask_for_quantity_message,
                     Toast.LENGTH_SHORT).show();
                     return;
-        } else if (!TextUtils.isEmpty(bookQuantityString ) || Integer.parseInt(bookPriceString) < 0) {
+        } else if (!TextUtils.isEmpty(bookQuantityString) && Integer.parseInt(bookQuantityString) < 0) {
             Toast.makeText(getApplicationContext(), R.string.ask_for_quantity_message,
                     Toast.LENGTH_SHORT).show();
                     return;
         } else {
-            int mBookQuantity = Integer.parseInt(bookPriceString);
+            int mBookQuantity = Integer.parseInt(bookQuantityString);
             values.put(BookEntry.COLUMN_BOOK_QUANTITY, mBookQuantity);
         }
         values.put(BookEntry.COLUMN_BOOK_PRODUCTION_INFO, mProductionInfo);
@@ -358,7 +358,7 @@ public class EditBookActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), R.string.ask_for_valid_phone_number_message,
                     Toast.LENGTH_SHORT).show();
                     return;
-        } else if (!TextUtils.isEmpty(bookQuantityString ) || Integer.parseInt(bookPriceString) < 0) {
+        } else if (!TextUtils.isEmpty(supplierPhoneNumberString) && Long.parseLong(supplierPhoneNumberString) < 0) {
             Toast.makeText(getApplicationContext(), R.string.ask_for_valid_phone_number_message,
                     Toast.LENGTH_SHORT).show();
                     return;
