@@ -1,5 +1,6 @@
 package com.example.claudiabee.mybookinventory;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
+
 
 /**
  * {@link MyBookInventoryCursorAdapter} is an adapter that knows how to create list items for a
@@ -54,7 +56,7 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
      * @param cursor is the source of book data and is already moved to the correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
 
         // Find views to populate in inflated view
         TextView bookTitleTextView = (TextView) view.findViewById(R.id.product_name_textview);
@@ -62,6 +64,7 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
         mBookQuantityTextView = (TextView) view.findViewById(R.id.quantity_textview); // make global
 
         // Extract properties from cursor
+     //   long bookId = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID)); // The id index
         String bookTitle = cursor.getString(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_TITLE));
         Double bookPrice = cursor.getDouble(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE));
         mQuantity = cursor.getInt(cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY)); // make global
@@ -75,23 +78,40 @@ public class MyBookInventoryCursorAdapter extends CursorAdapter {
         Button saleButton = (Button) view.findViewById(R.id.sale_button);
         // setTag to saleButton (and getTag later in onClick method so that the sale button works
         // in all list items)
-        saleButton.setTag(mBookQuantityTextView);
+
         // Set an onClickListener on the sale button
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // move cursor to the next position
+                if (cursor.moveToFirst()){
+                    // Display toast message that negative numbers are not allowed
+                    if(mQuantity <= 0){
+                        Toast.makeText(v.getContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                // Decrease the quantity by one
+                mQuantity--;
 
-                TextView mBookQuantityView = (TextView) v.getTag();
-                if (mQuantity == 0) {
-                    Toast.makeText(v.getContext(), R.string.no_negative_values_message, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                // Get the int value of mBookQuantity from mBookQuantityTextView
-                mQuantity = Integer.parseInt(mBookQuantityView.getText().toString()) - 1;
-                // Decrease the quantity of bookquantity by 1
+                // Create a new ContentValues object
+                ContentValues values = new ContentValues();
+                // Populate the ContentValues with the updated quantity of the current book
+                values.put(BookEntry.COLUMN_BOOK_QUANTITY, mQuantity);
 
-                // Set the new value of mBookQuantity on the mBookQuantityTextView
-                mBookQuantityView.setText(String.valueOf(mQuantity));
+                // Update the row with the new quantity of books
+                int updatedRow = v.getContext().getContentResolver().update(BookEntry.CONTENT_URI, values, null, null);
+                    // Show a toast message whether the book was updated or if the update was successful
+                    if (updatedRow == 0) {
+                        // No rows were updated
+                        Toast.makeText(v.getContext(), R.string.error_update_message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        // The book was updated
+                        Toast.makeText(
+                                v.getContext(), R.string.successful_update_message, Toast.LENGTH_SHORT).show();
+                    }
+
+                };
+
             }
         });
     }
