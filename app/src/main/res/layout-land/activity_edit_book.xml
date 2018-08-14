@@ -8,17 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/root_view_padding">
 
         <TextView
             android:id="@+id/edit_book_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/CommonBookLabelTextView"
             android:gravity="center"
-            android:text="@string/book_label"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textColor="@color/colorAccent"/>
+            android:text="@string/book_label"/>
 
         <EditText
             android:id="@+id/edit_book_title"
@@ -58,8 +54,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="@dimen/half_side_spacing"
+                android:layout_marginRight="@dimen/half_side_spacing"
                 android:text="@string/quantity"
                 android:textSize="@dimen/text_size" />
 
@@ -67,17 +63,18 @@
                 android:id="@+id/received_book_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="@dimen/side_spacing"
+                android:layout_marginRight="@dimen/side_spacing"
                 android:textSize="@dimen/text_size"
+                android:textColor="@color/data_text"
                 tools:text="@string/quantity_hint" />
 
             <Button
                 android:id="@+id/minus_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="@dimen/quantity_picker_button_side_length"
+                android:layout_height="@dimen/quantity_picker_button_side_length"
+                android:layout_marginLeft="@dimen/side_spacing"
+                android:layout_marginStart="@dimen/side_spacing"
                 android:text="@string/minus_button"
                 android:textColor="@android:color/white" />
 
@@ -85,17 +82,17 @@
                 android:id="@+id/edit_book_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="@dimen/half_side_spacing"
+                android:layout_marginStart="@dimen/half_side_spacing"
+                android:layout_marginEnd="@dimen/half_side_spacing"
+                android:layout_marginRight="@dimen/half_side_spacing"
                 android:hint="@string/quantity_hint"
                 android:inputType="number" />
 
             <Button
                 android:id="@+id/plus_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/quantity_picker_button_side_length"
+                android:layout_height="@dimen/quantity_picker_button_side_length"
                 android:text="@string/plus_button"
                 android:textColor="@android:color/white" />
 
@@ -103,10 +100,10 @@
                 android:id="@+id/edit_out_of_print_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/spinner_height"
+                android:layout_marginStart="@dimen/spinner_height"
+                android:layout_marginEnd="@dimen/side_spacing"
+                android:layout_marginRight="@dimen/side_spacing"
                 android:text="@string/out_of_print_label"
                 android:textSize="@dimen/text_size" />
 
@@ -131,7 +128,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_phone"
-            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawablePadding="@dimen/drawable_padding"
             android:hint="@string/supplier_phone_number_hint"
             android:inputType="phone" />
 

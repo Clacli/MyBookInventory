@@ -13,13 +13,9 @@
 
     <TextView
         android:id="@+id/book_label_add_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/CommonBookLabelTextView"
         android:gravity="center"
-        android:text="@string/book_label"
-        android:fontFamily="sans-serif-medium"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/colorAccent" />
+        android:text="@string/book_label" />
 
     <EditText
         android:id="@+id/add_book_title"
@@ -70,8 +66,8 @@
             android:id="@+id/out_of_print_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/side_spacing"
+            android:layout_marginRight="@dimen/side_spacing"
             android:text="@string/out_of_print_label"
             android:textSize="@dimen/text_size" />
 

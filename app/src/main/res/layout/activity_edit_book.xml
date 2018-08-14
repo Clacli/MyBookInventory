@@ -79,8 +79,8 @@
 
             <Button
                 android:id="@+id/minus_button"
-                android:layout_width="@dimen/quantity_picker_button_side_lenght"
-                android:layout_height="@dimen/quantity_picker_button_side_lenght"
+                android:layout_width="@dimen/quantity_picker_button_side_length"
+                android:layout_height="@dimen/quantity_picker_button_side_length"
                 android:layout_marginLeft="@dimen/side_spacing"
                 android:layout_marginStart="@dimen/side_spacing"
                 android:text="@string/minus_button"
@@ -99,8 +99,8 @@
 
             <Button
                 android:id="@+id/plus_button"
-                android:layout_width="@dimen/quantity_picker_button_side_lenght"
-                android:layout_height="@dimen/quantity_picker_button_side_lenght"
+                android:layout_width="@dimen/quantity_picker_button_side_length"
+                android:layout_height="@dimen/quantity_picker_button_side_length"
                 android:text="@string/plus_button"
                 android:textColor="@android:color/white" />
 
