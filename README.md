@@ -7,6 +7,11 @@ project 8 InventoryApp Stage1 - project 9 InventoryApp Stage2
 
 This app store in a SQLite database and display a list of book ans some of their feature, such as the title (product_name), price, quantity, name of the book supplier, phone number of supplier and whether or not one book is out of print.
 
+In the first activity, the BookListActivity, either a list of books (title, priceand quantity) is displayed or an empty view, if there are no books stored into the database. In each list item there is a button, when it gets clicked the quantity of books decreases by one. By clicking the FAB in the main activity the AddBookActivity opens; from here it is possible to save a new book record, by giving the required information and then clicking the FAB. A new book list item will appear in the BookListActivity.
+By clicking a list item in the BookListactivity the BookDatailActivity opens,from here it is possible to call the book supplier or to delete the current book entry or to open the EditBookActivity where the information on the book can be updated.
+
+I integrated Butter Knife library to the code for easy initialization by eliminating the use of findViewById. Butter Knife Copyright 2013 Jake Wharton http://jakewharton.github.io/butterknife/
+
 API 27
 As Loader are deprecated in API 28 I chose to revert to API 27.
 
