@@ -155,8 +155,7 @@ public class AddBookActivity extends AppCompatActivity {
         //Check if all the fields in the editor are blank
        if (TextUtils.isEmpty(bookTitle) || TextUtils.isEmpty(bookPriceString) ||
                 TextUtils.isEmpty(bookQuantityString) || (TextUtils.isEmpty(supplierName) ||
-                TextUtils.isEmpty(supplierPhoneNumberString) ||
-                mProductionInfo == BookEntry.CHECK_IF_OUT_OF_PRINT)) {
+                TextUtils.isEmpty(supplierPhoneNumberString) )) {
             // Since no fields were modified, we can return early without creating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             Toast.makeText(getApplicationContext(), R.string.enter_all_info_to_save_book_message,

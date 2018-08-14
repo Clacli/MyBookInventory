@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.example.claudiabee.mybookinventory.data.MyBookInventoryContract.BookEntry;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BookDetailActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -48,32 +51,41 @@ public class BookDetailActivity extends AppCompatActivity
     /**
      * TextView displaying the title of the book
      */
-    private TextView mTitleTextView;
+    @BindView(R.id.detail_book_title) TextView mTitleTextView;
 
     /**
      * TextView displaying the price of the book
      */
-    private TextView mPriceTextView;
+    @BindView(R.id.detail_book_price) TextView mPriceTextView;
 
     /**
      * TextView displaying the quantity of the book
      */
-    private TextView mQuantityTextView;
+    @BindView(R.id.detail_book_quantity) TextView mQuantityTextView;
 
     /**
      * TextView displaying the info on the production of the book
      */
-    private TextView mInfoOnProduction;
+    @BindView(R.id.detail_info_on_book_production) TextView mInfoOnProduction;
 
     /**
      * TextView displaying the info on the supplier's name of the book
      */
-    private TextView mSupplierNameTextView;
+    @BindView(R.id.detail_supplier_name) TextView mSupplierNameTextView;
 
     /**
      * TextView displaying the info on the supplier's telephone number of the book
      */
-    private TextView mSupplierPhoneNumberTextView;
+    @BindView(R.id.detail_supplier_phone_number) TextView mSupplierPhoneNumberTextView;
+
+    /** This is the edit button, when clicked an intent is sent to open the EditBookActivity */
+    @BindView(R.id.edit_book_button) Button editButton;
+
+    /** This is the delete button, when clicked the current book record gets deleted */
+    @BindView(R.id.delete_book_button) Button deleteButton;
+
+    /** This is the delete button, when clicked the current book record gets deleted */
+    @BindView(R.id.order_button) Button orderButton;
 
     /**
      * Suppliers phone number
@@ -84,6 +96,8 @@ public class BookDetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
+
+        ButterKnife.bind(this);
 
         // Return the Intent that started this activity in edit mode using the getIntent()
         Intent intent = getIntent();
@@ -96,17 +110,6 @@ public class BookDetailActivity extends AppCompatActivity
             getSupportLoaderManager().initLoader(BOOK_URI_LOADER, null, this);
         }
 
-        // Find all relevant views that we will need to read user input from
-        mTitleTextView = (TextView) findViewById(R.id.detail_book_title);
-        mPriceTextView = (TextView) findViewById(R.id.detail_book_price);
-        mQuantityTextView = (TextView) findViewById(R.id.detail_book_quantity);
-        mInfoOnProduction = (TextView) findViewById(R.id.detail_info_on_book_production);
-        mSupplierNameTextView = (TextView) findViewById(R.id.detail_supplier_name);
-        mSupplierPhoneNumberTextView = (TextView) findViewById(R.id.detail_supplier_phone_number);
-
-        // Set onClickListener on the editButton so that when the button gets clicked
-        // an intent is sent to open the EditBookActivity
-        Button editButton = (Button) findViewById(R.id.edit_book_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +123,7 @@ public class BookDetailActivity extends AppCompatActivity
 
         // Set onClickListener on the deleteButton so that when the button gets clicked
         // the current record gets deleted, going back to the parent activity
-        Button deleteButton = (Button) findViewById(R.id.delete_book_button);
+        //Button deleteButton = (Button) findViewById(R.id.delete_book_button);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +134,7 @@ public class BookDetailActivity extends AppCompatActivity
 
         // Set onClickListener on the editButton so that when the button gets clicked
         // an intent is sent to open the phone to call the supplier's phone number
-        Button orderButton = (Button) findViewById(R.id.order_button);
+        //Button orderButton = (Button) findViewById(R.id.order_button);
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
